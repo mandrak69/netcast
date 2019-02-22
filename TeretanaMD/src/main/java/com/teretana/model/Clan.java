@@ -1,27 +1,35 @@
-package model;
+package com.teretana.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
+@Entity
 
 public class Clan {
 	
-	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+
 	private Long id;
-	
 	
 	private String ime;
 	private String prezime;
 	private String mail;
 	private String pass;
 	
-	private Clan() {
+	public Clan() {
 		
 	}
 	
+	public Clan(Long id, String ime, String prezime) {
+		super();
+		this.id = id;
+		this.ime = ime;
+		this.prezime = prezime;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -1,4 +1,4 @@
-package model;
+package com.teretana.model;
 
 
 import javax.persistence.Entity;

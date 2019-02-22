@@ -1,4 +1,4 @@
-package model;
+package com.teretana.model;
 
 import java.sql.Date;
 import javax.persistence.Entity;

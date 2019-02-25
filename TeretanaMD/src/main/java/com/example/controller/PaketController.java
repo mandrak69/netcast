@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.PaketDAO;
-import com.example.domain.Knjigatreninga;
 import com.example.domain.Paket;
 
 @RestController    

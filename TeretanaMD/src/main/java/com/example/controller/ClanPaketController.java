@@ -33,23 +33,29 @@ public class ClanPaketController {
     @Autowired
 	private ClanDAO clanDao;
 
-	@PostMapping(path="/add") 
+    @PostMapping(path="/add")
 	public @ResponseBody String addNewClanPaket (@RequestParam Long clanId, @RequestParam Long paketId)
 	{
 		
+    	
+    	
     ClanPaket n = new ClanPaket();
 	
+   
 	Optional<Clan> cl = clanDao.findById(clanId);
-	cl.ifPresent((ph)->n.setClan(ph));
+	
+    Clan a = cl.get();
+	n.setClan(a);
 	
 	Optional<Paket> pa = paketDao.findById(paketId);
-	pa.ifPresent((ph)->n.setPaket(ph));
+	Paket b = pa.get();
+	n.setPaket(b);
 	
 	
-	n.setDatum(new Date());
+	//n.setDatum(new Date());
 		clanPaketDao.save(n);
 
-		return "Saved"+n.getId();
+		return "Saved";
 	}
 
 	@GetMapping(path="/all")

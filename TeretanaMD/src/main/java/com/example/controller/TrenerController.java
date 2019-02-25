@@ -46,6 +46,10 @@ public class TrenerController {
     //  JSON clanovi
     return trenerDao.findById(id);
 }
+	
+	
+	
+	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public void deleteTrener(@PathVariable("id") Long id) {
 		trenerDao.deleteById(id);		

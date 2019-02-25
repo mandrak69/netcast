@@ -1,8 +1,12 @@
 package com.example.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +18,7 @@ import com.example.domain.Trener;
 
 
 @RestController    
-@RequestMapping(path="/clan") 
+@RequestMapping(path="/trener") 
 public class TrenerController {
 	
 	@Autowired           
@@ -36,5 +40,14 @@ public class TrenerController {
 	public @ResponseBody Iterable<Trener> getAllTrener() {
 		
 		return trenerDao.findAll();
+	}
+	@GetMapping(path="/getId/{id}")
+	public @ResponseBody Optional<Trener> getTrenerbyId(@PathVariable Long id) {
+    //  JSON clanovi
+    return trenerDao.findById(id);
+}
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public void deleteTrener(@PathVariable("id") Long id) {
+		trenerDao.deleteById(id);		
 	}
 }

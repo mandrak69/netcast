@@ -1,56 +1,81 @@
 package com.example.domain;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
+
+
+
+@Entity
 public class Paket {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(unique = true)
-	private String ime;
-	private Date trajanje;
-	private Double cena;
-	
-	
-	public Paket() {
-		
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String ime;
+    private Double cena;
+  
+    private Date vreme;
+  
+  
+    @OneToMany(mappedBy = "paket", cascade = CascadeType.ALL)
+    private Set<ClanPaket> clanPaketi = new HashSet<>();
+
+    public Paket() {
+    }
+
+    public Paket(String ime) {
+        this.ime = ime;
+    }
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getIme() {
 		return ime;
 	}
+
 	public void setIme(String ime) {
 		this.ime = ime;
 	}
-	public Date getTrajanje() {
-		return trajanje;
-	}
-	public void setTrajanje(Date trajanje) {
-		this.trajanje = trajanje;
-	}
-	public double getCena() {
+
+	public Double getCena() {
 		return cena;
 	}
-	public void setCena(double cena) {
+
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
-	@Override
-	public String toString() {
-		return "Paketi [id=" + id + ", ime=" + ime + ", trajanje=" + trajanje + ", cena=" + cena + "]";
-	}
-	
-	
 
+	public Date getVreme() {
+		return vreme;
+	}
+
+	public void setVreme(Date vreme) {
+		this.vreme = vreme;
+	}
+
+	public Set<ClanPaket> getClanPaketi() {
+		return clanPaketi;
+	}
+
+	public void setClanPaketi(Set<ClanPaket> clanPaketi) {
+		this.clanPaketi = clanPaketi;
+	}
+    
 }
+

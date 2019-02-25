@@ -8,8 +8,7 @@ import com.example.domain.Clan;
 
 public interface ClanDAO extends CrudRepository<Clan, Long> {
 
-    Clan findByMail(String mail);
-
+   
 	Iterable<Clan> findByPrezime(String prezime);
 
 	

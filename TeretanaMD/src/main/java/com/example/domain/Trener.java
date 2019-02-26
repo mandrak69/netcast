@@ -1,6 +1,5 @@
 package com.example.domain;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,28 +12,24 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Trener  {
-
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    
+        
     private Long id;
     
     private String ime;
-    // @Max(value=?)  @Min(value=?)
-     private Double cena;
-     private String prezime;
-   
-   
+    // moze se automatizovati cena pri kreiranju
     
+     private Double cena;
+     
+     private String prezime;
+     
     @OneToMany(mappedBy = "trener")
     private Set<Knjigatreninga> knjigatreningaSet= new HashSet<>();;
 
     public Trener() {
-    }
-
-    
+    } 
 
     public Long getId() {
         return id;

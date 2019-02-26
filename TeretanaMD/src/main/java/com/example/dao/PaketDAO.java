@@ -7,7 +7,6 @@ import com.example.domain.Paket;
 
 @Repository
 
-
 public interface PaketDAO extends CrudRepository<Paket, Long> {
 
    

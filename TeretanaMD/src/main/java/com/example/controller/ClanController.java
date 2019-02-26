@@ -1,8 +1,5 @@
 package com.example.controller;
 
-import java.net.URI;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,15 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.example.dao.ClanDAO;
 import com.example.domain.Clan;
-
-
+import com.example.domain.DTO.ClanDTO;
+import com.example.service.ClanService;
 
 
 @RestController    
@@ -29,75 +23,75 @@ public class ClanController {
 	
 	@Autowired      
 	private ClanDAO clanDao;
-
-	@GetMapping(path="/add") 
-	public @ResponseBody String addNewClan ( @RequestParam String ime
-			, @RequestParam String prezime, @RequestParam String email) {
-		
-		Clan n = new Clan();
-		n.setIme(ime);
-		n.setPrezime(prezime);
-		n.setEmail(email);
-		clanDao.save(n);
-
-		return "Saved";
+	@Autowired
+	private ClanService clanService;
+	
+	public ClanController() {
+		super();	
 	}
-
+	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Clan> getAllClan() {
-		// vraca JSON format clanove 
-		return clanDao.findAll();
+	   public @ResponseBody Iterable<Clan> getAllClan() {
+	 	 // vraca JSON format clanove 
+	   return clanDao.findAll();
 	}
+	
+	@PostMapping(path="/add") 
+	public @ResponseBody Clan addNewClan (@RequestBody Clan clan) {
+	
+		clanService.save(clan);
+	return clan;
+	}
+	
+	//---------------------------------------------------------------------------------------
+	//   u POST ide ClanDTO sa imenom,prezimenom,adresom.Zove addNewClanDTO koja pravi Clan objekat i snima 
+	@PostMapping(path="/addDTO") 
+	public @ResponseBody Clan addNewClanDTO (@RequestBody ClanDTO clanDto) {
+	
+		Clan clanSaved = clanService.saveDTO(clanDto);
+	return clanSaved;
+	}
+	
+	
+
+	// POST metod za dodavanje clana - nije testiran - pojasniti
+	
+	@PostMapping("/create")
+	public ResponseEntity<Object> createClan(@RequestBody Clan clan) {
+			
+		return  ResponseEntity.ok().body(clanService.create(clan));
+	}
+	
 	@GetMapping(path="/getId/{id}")
-	public @ResponseBody Clan getClanbyId(@PathVariable Long id)  {
-    //  JSON clanovi
-		Optional<Clan> cl = clanDao.findById(id);
-		if (!cl.isPresent())
-			return (null);
-		
-    return cl.get();
-}
+	public @ResponseBody Clan getClanbyId(@PathVariable Long id)  {				
+    return clanService.findById(id);
+    
+	}
+	
 	@DeleteMapping("/delete/{id}")
-	public void deleteClan(@PathVariable("id") Long id) {
-		clanDao.deleteById(id);		
+	public void delete(@PathVariable("id") Long id) {	
+		clanService.delete(id);		
 	}	
 	
+	@DeleteMapping("/deleteClan")
+	public void deleteClan(@RequestBody Clan clan) {	
+		clanService.delete(clan.getId());		
+	}	
 	
+	/*  izmena postojeceg clana preko ID uz optional<> -- mozda pukne*/
 	
-	
-	
-	
-	// POST metod za dodavanje clana - nije testiran - pojasniti
-	@PostMapping("/addclan")
-	public ResponseEntity<Object> createClan(@RequestBody Clan clan) {
-		Clan savedClan = clanDao.save(clan);
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateClan(@PathVariable("id") Long id) {
 
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedClan.getId()).toUri();
+		ResponseEntity<Object> t = clanService.update(clanDao.findById(id).get());
 
-		return ResponseEntity.created(location).build();
-		/*  {
-		    "name": "Tom",
-		    "passportNumber": "Z1234567"
-		  }  */
-		/*  pri POST metodu odabrati row  tip i JSON/Aplication/json i radi */
+		return t;
 	}
-	
-	
-	/*  izmena postojeceg clana */
-	
-	@PutMapping("/izmena/{id}")
-	public ResponseEntity<Object> updateClan(@RequestBody Clan clan, @PathVariable long id) {
+	@PutMapping("/update")
+	public ResponseEntity<Object> updateClan(@RequestBody Clan clan) {
 
-		Optional<Clan> cl = clanDao.findById(id);
+		ResponseEntity<Object> t = clanService.update(clan);
 
-		if (!cl.isPresent())
-			return ResponseEntity.notFound().build();
-
-		clan.setId(id);
-		
-		clanDao.save(clan);
-
-		return ResponseEntity.noContent().build();
+		return t;
 	}
 }

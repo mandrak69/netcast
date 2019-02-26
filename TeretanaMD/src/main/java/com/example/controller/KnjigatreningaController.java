@@ -27,6 +27,7 @@ public class KnjigatreningaController {
 	private KnjigatreningaDAO knjigatreningaDao;
     @Autowired
     private ClanPaketDAO clanPaketDao;
+    @Autowired
 	private TrenerDAO trenerDao;
 
 	@PostMapping(path="/add") 
@@ -39,7 +40,7 @@ public class KnjigatreningaController {
 	pak.ifPresent((ph)->n.setClanPaket(ph));
 	Optional<Trener> tre = trenerDao.findById(trenerId);
 	tre.ifPresent((ph)->n.setTrener(ph));
-	
+	 
 		knjigatreningaDao.save(n);
 
 		return "Saved";

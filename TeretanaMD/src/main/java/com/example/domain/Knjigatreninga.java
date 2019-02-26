@@ -16,11 +16,11 @@ public class Knjigatreninga  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     
     private Date vreme;
     private Double cena;
     private Date vremedo;
+    
     @ManyToOne(optional = true)
     @JoinColumn
     private Trener trener;
@@ -38,8 +38,6 @@ public class Knjigatreninga  {
         this.trener = trener;
         this.clanPaket = clanPaket;
     }
-
-   
 
     public Long getId() {
         return id;

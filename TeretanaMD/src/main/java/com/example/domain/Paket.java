@@ -11,10 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
-
-
-
 @Entity
 public class Paket {
     @Id
@@ -25,8 +21,7 @@ public class Paket {
     private Double cena;
   
     private Date vreme;
-  
-  
+    
     @OneToMany(mappedBy = "paket", cascade = CascadeType.ALL)
     private Set<ClanPaket> clanPaketi = new HashSet<>();
 

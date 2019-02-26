@@ -28,50 +28,39 @@ public class ClanPaket  {
     @JoinColumn
     private Clan clan;
 
-    
     @ManyToOne
     @JoinColumn
     private Paket paket;
 
-   
-    
     private Date datum;
     
     @OneToMany(mappedBy = "clanPaket", cascade = CascadeType.ALL)
     private Set<Knjigatreninga> knjigatreninga=new  HashSet<>();
-    
-    
-
+       
     public ClanPaket() {
 		super();
 	}
-
 
 	public ClanPaket(Paket paket, Date datum) {
         this.paket = paket;
         this.datum = datum;
     }
 
-    
     public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public Clan getClan() {
 		return clan;
 	}
 
-
 	public void setClan(Clan clan) {
 		this.clan = clan;
 	}
-
 
 	public Paket getPaket() {
 		return paket;

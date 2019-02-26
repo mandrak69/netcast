@@ -41,10 +41,6 @@ public class Clan {
 
 
 
-	
-
-
-
 	public Clan(String ime, String prezime) {
 		super();
 		this.ime = ime;

@@ -22,6 +22,8 @@ import com.example.domain.DTO.PaketDTO;
 
 @Service
 public class ClanPaketService {
+	
+	
 	@Autowired
 	ClanPaketDAO clanPaketDao;
 	@Autowired
@@ -36,7 +38,6 @@ public class ClanPaketService {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	
 	
 	public ClanPaket save(ClanPaketDTO clanPaketDto) {

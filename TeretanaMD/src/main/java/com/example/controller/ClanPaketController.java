@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dao.ClanDAO;
 import com.example.dao.ClanPaketDAO;
+import com.example.dao.PaketDAO;
+import com.example.domain.Clan;
 import com.example.domain.ClanPaket;
+import com.example.domain.Paket;
 import com.example.domain.DTO.ClanDTO;
 import com.example.domain.DTO.ClanPaketDTO;
 import com.example.domain.DTO.PaketDTO;
@@ -31,9 +35,11 @@ public class ClanPaketController {
 	private ClanPaketDAO clanPaketDao;
     @Autowired
     private ClanPaketService clanPaketService; 
-    @Autowired
-	
-
+    
+    @Autowired      
+	private ClanDAO clanDao;
+    @Autowired      
+	private PaketDAO paketDao;
     
     public ClanPaketController() {
 		super();
@@ -87,6 +93,17 @@ public class ClanPaketController {
 	}
 	
 	
+	// prebaciti u servis ako ispadne korisno
+	
+	@GetMapping("/createID/{idclan}/{idpaket}")
+	public ResponseEntity<Object> createClanPaket(@PathVariable Long idclan,@PathVariable Long idpaket) {
+			Optional<Clan> clance = clanDao.findById(idclan);
+			Optional<Paket> paketce = paketDao.findById(idpaket);
+		ClanPaket cpd=new ClanPaket();
+		cpd.setClan(clance.get());
+		cpd.setPaket(paketce.get());
+		return  ResponseEntity.ok().body(clanPaketDao.save(cpd));
+	}
 	
 	
 }

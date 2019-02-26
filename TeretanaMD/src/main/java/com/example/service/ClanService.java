@@ -35,7 +35,11 @@ public class ClanService implements ClanIF {
 	
 public Clan saveDTO(ClanDTO clanDto) {
 		Class<? extends Clan> clanCast = (new Clan()).getClass();
+		
+		
 	Clan clanC = clanCast.cast(clanDto);
+	
+	
 	
 		clanDao.save(clanC);
 		

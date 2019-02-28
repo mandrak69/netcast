@@ -44,7 +44,15 @@ public class utility {
 			Field polje = iterator.next();
   
 	            	try {
+	            		boolean acc = polje.isAccessible();
+	            		
+	            		polje.setAccessible(true);
+	            		
 						polje.set(u, polje.get(iz)) ;
+						
+						polje.setAccessible(acc);
+						
+						
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						
 						e.printStackTrace();

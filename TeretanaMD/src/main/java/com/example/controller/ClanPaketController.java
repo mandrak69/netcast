@@ -124,7 +124,7 @@ public class ClanPaketController {
 	
 	@GetMapping("/createID/{idclan}/{idpaket}")
 	public ResponseEntity<Object> createClanPaket(@PathVariable Long idclan,@PathVariable Long idpaket) {
-			Optional<Clan> clance = clanPaketService.;
+			Optional<Clan> clance = clanPaketService.create(clanPaket);
 			Optional<Paket> paketce = paketDao.findById(idpaket);
 		ClanPaket cpd=new ClanPaket();
 		cpd.setClan(clance.get());

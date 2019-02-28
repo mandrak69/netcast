@@ -72,11 +72,7 @@ public class ClanService implements ClanIF {
 		return ResponseEntity.created(location).build();
 		}
 	
-		/*  {
-		    "name": "Tom",
-		    "passportNumber": "Z1234567"
-		  }  */
-		/*  pri POST metodu odabrati row  tip i JSON/Aplication/json i radi */
+		
 	
 	@Override
 	@Transactional

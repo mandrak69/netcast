@@ -87,7 +87,8 @@ public class ClanPaketService {
 		{
 		//dohvati sva polja objekta i prepisi u Entity
 	    ClanPaket clanPaket = clp.get();
-		utility.prekopiraj(clanPaketdto,clanPaket);
+		
+	    utility.prekopiraj(clanPaketdto,clanPaket);
 		
 		clanPaketDao.save(clanPaket);
 

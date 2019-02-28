@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.PaketDAO;
 import com.example.domain.Paket;
+import com.example.dto.PaketDTO;
 import com.example.service.PaketService;
 
 @RestController    
 @RequestMapping(path="/paket") 
+
 public class PaketController {
 	@Autowired 
 	          
 	private PaketDAO paketDao;
 	@Autowired
 	private PaketService paketService;
-	
-	
+			
 	public PaketController() {
 		super();
 		
@@ -40,16 +41,18 @@ public class PaketController {
 	}
 	
 	
+	
 	@PostMapping(path="/add") 
-	public @ResponseBody Paket addNewPaket (@RequestBody Paket paket) {
+	public @ResponseBody PaketDTO addNewPaket (@RequestBody PaketDTO paketdto) {
 		
-		paketService.save(paket);
-		return paket;
+		paketService.saves(paketdto);
+		return paketdto;
 	}
+	
 	@PostMapping("/create")
-	public ResponseEntity<Object> createPaket(@RequestBody Paket paket) {
+	public ResponseEntity<Object> createPaket(@RequestBody PaketDTO paketdto) {
 			
-		return paketService.create(paket);
+		return paketService.create(paketdto);
 	}
 	
 	
@@ -68,23 +71,16 @@ public class PaketController {
 	}
 	
 	@DeleteMapping("/deletePaket")
-	public void deletePaket(@RequestBody Paket paket) {
+	public void deletePaket(@RequestBody PaketDTO paketdto) {
 	
-		paketService.delete(paket.getId());		
+		paketService.delete(paketdto.getId());		
 	}
 	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Object> updatePaket(@PathVariable("id") Long id) {
-
-		ResponseEntity<Object> t = paketService.update(paketDao.findById(id).get());
-
-		return t;
-	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<Object> updatePaket(@RequestBody Paket paket) {
+	public ResponseEntity<Object> updatePaket(@RequestBody PaketDTO paketdto) {
 
-		ResponseEntity<Object> t = paketService.update(paket);
+		ResponseEntity<Object> t = paketService.update(paketdto);
 
 		return t;
 	}

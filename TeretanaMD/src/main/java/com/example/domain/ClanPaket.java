@@ -25,17 +25,18 @@ public class ClanPaket  {
      
     
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false, referencedColumnName = "id")
     private Clan clan;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false, referencedColumnName = "id")
     private Paket paket;
 
     private Date datum;
+    private Date istice;
     
     @OneToMany(mappedBy = "clanPaket", cascade = CascadeType.ALL)
-    private Set<Knjigatreninga> knjigatreninga=new  HashSet<>();
+    private Set<KnjigaTreninga> knjigaTreninga=new  HashSet<>();
        
     public ClanPaket() {
 		super();
@@ -82,15 +83,26 @@ public class ClanPaket  {
 	}
 
 
-	public Set<Knjigatreninga> getKnjigatreninga() {
-		return knjigatreninga;
+	
+
+	public Date getIstice() {
+		return istice;
 	}
 
-
-	public void setKnjigatreninga(Set<Knjigatreninga> knjigatreninga) {
-		this.knjigatreninga = knjigatreninga;
+	public void setIstice(Date istice) {
+		this.istice = istice;
 	}
 
+	
+
+
+	public Set<KnjigaTreninga> getKnjigaTreninga() {
+		return knjigaTreninga;
+	}
+
+	public void setKnjigaTreninga(Set<KnjigaTreninga> knjigaTreninga) {
+		this.knjigaTreninga = knjigaTreninga;
+	}
 
 	@Override
     public boolean equals(Object o) {

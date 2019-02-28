@@ -26,7 +26,7 @@ public class Trener  {
      private String prezime;
      
     @OneToMany(mappedBy = "trener")
-    private Set<Knjigatreninga> knjigatreningaSet= new HashSet<>();;
+    private Set<KnjigaTreninga> knjigatreningaSet= new HashSet<>();;
 
     public Trener() {
     } 
@@ -64,14 +64,6 @@ public class Trener  {
     }
 
     @XmlTransient
-    public Set<Knjigatreninga> getKnjigatreningaSet() {
-        return knjigatreningaSet;
-    }
-
-    public void setKnjigatreningaSet(Set<Knjigatreninga> knjigatreningaSet) {
-        this.knjigatreningaSet = knjigatreningaSet;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -79,7 +71,15 @@ public class Trener  {
         return hash;
     }
 
-    @Override
+    public Set<KnjigaTreninga> getKnjigatreningaSet() {
+		return knjigatreningaSet;
+	}
+
+	public void setKnjigatreningaSet(Set<KnjigaTreninga> knjigatreningaSet) {
+		this.knjigatreningaSet = knjigatreningaSet;
+	}
+
+	@Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Trener)) {

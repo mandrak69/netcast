@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.Collection;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,11 @@ import com.example.dao.PaketDAO;
 import com.example.domain.Clan;
 import com.example.domain.ClanPaket;
 import com.example.domain.Paket;
-import com.example.domain.DTO.ClanDTO;
-import com.example.domain.DTO.ClanPaketDTO;
-import com.example.domain.DTO.PaketDTO;
+import com.example.dto.ClanDTO;
+import com.example.dto.ClanPaketDTO;
+import com.example.dto.PaketDTO;
 import com.example.service.ClanPaketService;
+import com.example.service.utility;
 
 
 
@@ -31,8 +33,7 @@ import com.example.service.ClanPaketService;
 @RequestMapping(path="/clanpaket") 
 public class ClanPaketController {
 	
-	@Autowired      
-	private ClanPaketDAO clanPaketDao;
+	
     @Autowired
     private ClanPaketService clanPaketService; 
     
@@ -47,10 +48,11 @@ public class ClanPaketController {
 	}
     
     @GetMapping(path="/all")
-	public @ResponseBody Iterable<ClanPaket> getAllClanPaket() {
-		
-		return clanPaketDao.findAll();
-	}
+    public @ResponseBody Collection<ClanPaket> getAllClanPaket() {
+		Collection<ClanPaket> kk = clanPaketService.findAllClanPaket();
+	 	 // vraca JSON format clanove 
+	   return kk;
+    }
     
 	@PostMapping(path="/add")
 	public @ResponseBody String addNewClanPaket (@RequestBody ClanDTO clanDto, @RequestBody PaketDTO paketDto)
@@ -60,12 +62,31 @@ public class ClanPaketController {
     	
 		return "Saved";
 	}
+	
+	@PostMapping(path="/kupi")
+	public @ResponseBody String clanKupujePaket (@RequestBody ClanPaketDTO clanPaketDto)
+	{
+		   
+		
+		clanPaketService.save(clanPaketDto);
+    	
+		return "Kupljen";
+	}
 
+	
+	@GetMapping(path="/aktiviraj/{id}")
+	public  void aktivirajPaket(@PathVariable Long id) {
+		clanPaketService.aktiviraj(id);
+		return ;
+	}
+	
+	
 	@PostMapping("/create")
 	public ResponseEntity<Object> createClanPaket(@RequestBody ClanDTO clanDto, @RequestBody PaketDTO paketDto) {
 			
 		return  ResponseEntity.ok().body(clanPaketService.create(clanDto,paketDto));
 	}
+	
 	
 	@GetMapping(path="/getId/{id}")
 	public @ResponseBody ClanPaket getClanPaketbyId(@PathVariable Long id)  {				
@@ -73,21 +94,27 @@ public class ClanPaketController {
     
 	}
 	
-	@GetMapping(path="/getPaket")
-	public @ResponseBody Optional<ClanPaket> getClanPaketbyDTO(@RequestBody ClanPaketDTO clanPaketDto) {
+	@PostMapping(path="/getClanPaket")
+	public @ResponseBody ClanPaketDTO getClanPaket(@RequestBody ClanPaketDTO clanPaketDto) {
     //  JSON clanovi
-    return clanPaketDao.findById(clanPaketDto.getId());
+		ClanPaket cln = clanPaketService.findById(clanPaketDto.getId());
+		utility.prekopiraj(cln,clanPaketDto);
+    return clanPaketDto;
 }
 	
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public void deleteClanPaket(@PathVariable("id") Long id) {
-		clanPaketDao.deleteById(id);		
+	public void delete(@RequestBody ClanPaketDTO clanPaketDto) {
+		 ClanPaket cln = clanPaketService.findById(clanPaketDto.getId());
+		
+		 clanPaketService.deleteById(cln.getId());		
 	}
+	
+	
 	@PutMapping("/update")
-	public ResponseEntity<Object> updateClanPaket(@RequestBody ClanPaket clanPaket) {
+	public ResponseEntity<Object> updateClanPaket(@RequestBody ClanPaketDTO clanPaketDto) {
 
-		ResponseEntity<Object> t = clanPaketService.update(clanPaket);
+		ResponseEntity<Object> t = clanPaketService.update(clanPaketDto);
 
 		return t;
 	}
@@ -97,7 +124,7 @@ public class ClanPaketController {
 	
 	@GetMapping("/createID/{idclan}/{idpaket}")
 	public ResponseEntity<Object> createClanPaket(@PathVariable Long idclan,@PathVariable Long idpaket) {
-			Optional<Clan> clance = clanDao.findById(idclan);
+			Optional<Clan> clance = clanPaketService.;
 			Optional<Paket> paketce = paketDao.findById(idpaket);
 		ClanPaket cpd=new ClanPaket();
 		cpd.setClan(clance.get());

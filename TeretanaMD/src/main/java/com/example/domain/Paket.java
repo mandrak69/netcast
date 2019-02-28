@@ -1,6 +1,5 @@
 package com.example.domain;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,9 +17,10 @@ public class Paket {
     private Long id;
 
     private String ime;
+   
     private Double cena;
   
-    private Date vreme;
+    private Integer trajanje;
     
     @OneToMany(mappedBy = "paket", cascade = CascadeType.ALL)
     private Set<ClanPaket> clanPaketi = new HashSet<>();
@@ -56,12 +56,17 @@ public class Paket {
 		this.cena = cena;
 	}
 
-	public Date getVreme() {
-		return vreme;
+	public Integer getTrajanje() {
+		return trajanje;
 	}
 
-	public void setVreme(Date vreme) {
-		this.vreme = vreme;
+	public void setTrajanje(Integer trajanje) {
+		this.trajanje = trajanje;
+	}
+
+
+	public void setVreme(Integer trajanje) {
+		this.trajanje = trajanje;
 	}
 
 	public Set<ClanPaket> getClanPaketi() {

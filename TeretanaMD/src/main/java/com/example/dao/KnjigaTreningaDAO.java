@@ -3,11 +3,11 @@ package com.example.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.domain.Knjigatreninga;
+import com.example.domain.KnjigaTreninga;
 
 @Repository
 
-public interface KnjigatreningaDAO extends JpaRepository<Knjigatreninga, Long> {
+public interface KnjigaTreningaDAO extends JpaRepository<KnjigaTreninga, Long> {
 
    
 

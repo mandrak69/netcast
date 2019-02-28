@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.ClanPaketDAO;
-import com.example.dao.KnjigatreningaDAO;
+import com.example.dao.KnjigaTreningaDAO;
 import com.example.dao.TrenerDAO;
 import com.example.domain.ClanPaket;
-import com.example.domain.Knjigatreninga;
+import com.example.domain.KnjigaTreninga;
 import com.example.domain.Trener;
 
 
@@ -21,39 +21,38 @@ import com.example.domain.Trener;
 
 @RestController    
 @RequestMapping(path="/knjiga") 
-public class KnjigatreningaController {
+public class KnjigaTreningaController {
 	
 	@Autowired      
-	private KnjigatreningaDAO knjigatreningaDao;
+	private KnjigaTreningaDAO knjigaTreningaDao;
     @Autowired
     private ClanPaketDAO clanPaketDao;
     @Autowired
 	private TrenerDAO trenerDao;
 
 	@PostMapping(path="/add") 
-	public @ResponseBody String addNewKnjigatreninga (@RequestParam Long clanPaketId, @RequestParam Long trenerId
-			,@RequestParam Double cena) {
+	public @ResponseBody String addNewKnjigaTreninga ( @RequestParam Long trenerId,@RequestParam Long clanPaketId,@RequestParam Double cena) {
 		
-    Knjigatreninga n = new Knjigatreninga();
+    KnjigaTreninga n = new KnjigaTreninga();
 	n.setCena(cena);
 	Optional<ClanPaket> pak = clanPaketDao.findById(clanPaketId);
 	pak.ifPresent((ph)->n.setClanPaket(ph));
 	Optional<Trener> tre = trenerDao.findById(trenerId);
 	tre.ifPresent((ph)->n.setTrener(ph));
 	 
-		knjigatreningaDao.save(n);
+		knjigaTreningaDao.save(n);
 
 		return "Saved";
 	}
 
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Knjigatreninga> getAllClan() {
+	public @ResponseBody Iterable<KnjigaTreninga> getAllClan() {
 		
-		return knjigatreningaDao.findAll();
+		return knjigaTreningaDao.findAll();
 	}
 	@GetMapping(path="/getId/{id}")
-	public @ResponseBody Optional<Knjigatreninga> getKnjigatreningabyId(@RequestParam Long id) {
+	public @ResponseBody Optional<KnjigaTreninga> getKnjigaTreningabyId(@RequestParam Long id) {
     //  JSON clanovi
-    return knjigatreningaDao.findById(id);
+    return knjigaTreningaDao.findById(id);
 }
 }

@@ -7,59 +7,69 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.example.dao.KnjigatreningaDAO;
-import com.example.domain.Knjigatreninga;
+
+import com.example.dao.KnjigaTreningaDAO;
+
+import com.example.domain.KnjigaTreninga;
+
+import com.example.dto.KnjigaTreningaDTO;
 
 
 
 @Service
 public class KnjigaTreningaService {
 	@Autowired
-	KnjigatreningaDAO knjigatreningaDao;
+	KnjigaTreningaDAO knjigaTreningaDao;
 	
 	
 
-	public Knjigatreninga save(Knjigatreninga knjigatreninga) {
+	public KnjigaTreninga save(KnjigaTreninga knjigaTreninga) {
 		
-		knjigatreningaDao.save(knjigatreninga);
+		knjigaTreningaDao.save(knjigaTreninga);
 		
-	return knjigatreninga;
+	return knjigaTreninga;
 
 	}
 	
-	public Knjigatreninga findById(Long id) {
-		Optional<Knjigatreninga> oc = knjigatreningaDao.findById(id);
-		Knjigatreninga knjigatreninga = oc.get();
+	public KnjigaTreninga findById(Long id) {
+		Optional<KnjigaTreninga> oc = knjigaTreningaDao.findById(id);
+		KnjigaTreninga knjigaTreninga = oc.get();
 		
-	  return knjigatreninga ;
+	  return knjigaTreninga ;
 	}
 	
 	public void delete(Long  id) {
-		knjigatreningaDao.deleteById(id);
+		knjigaTreningaDao.deleteById(id);
 
 	}
-	public ResponseEntity<Object> create(Knjigatreninga knjigatreninga) {
-		Knjigatreninga savedKnjigatreninga = knjigatreningaDao.save(knjigatreninga);
+	public ResponseEntity<Object> create(KnjigaTreninga knjigaTreninga) {
+		KnjigaTreninga savedKnjigaTreninga = knjigaTreningaDao.save(knjigaTreninga);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedKnjigatreninga.getId()).toUri();
+				.buildAndExpand(savedKnjigaTreninga.getId()).toUri();
 
 		return ResponseEntity.created(location).build();
 		}
 	
 		
-	public ResponseEntity<Object> update( Knjigatreninga knjigatreninga) {
+	public ResponseEntity<Object> update( KnjigaTreningaDTO knjigaTreningadto) {
 
-	/*	Optional<Knjigatreninga> cl = knjigatreningaDao.findById(knjigatreninga.getId());
+		Optional<KnjigaTreninga> clp = knjigaTreningaDao.findById(knjigaTreningadto.getId());
 
-		if (!cl.isPresent())
+		if (!clp.isPresent())
+		{
 			return ResponseEntity.notFound().build();
-
-		knjigatreninga.setId(id);
-	*/
+			
+		}  else 
+		{
+		//dohvati sva polja objekta i prepisi u Entity
+			KnjigaTreninga knj = clp.get();
+		utility.prekopiraj(knjigaTreningadto,knj);
 		
-		knjigatreningaDao.save(knjigatreninga);
+		knjigaTreningaDao.save(knj);
 
 		return ResponseEntity.noContent().build();
+		}
+		
 	}
 }

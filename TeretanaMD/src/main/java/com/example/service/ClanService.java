@@ -1,65 +1,70 @@
 package com.example.service;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.dao.ClanDAO;
 import com.example.domain.Clan;
-import com.example.domain.DTO.ClanDTO;
+import com.example.dto.ClanDTO;
 import com.example.service.intf.ClanIF;
+
 
 
 
 @Service
 public class ClanService implements ClanIF {
+	
 	@Autowired
 	ClanDAO clanDao;
 	
 	
+	
+	//  da li ovo ima ssupline i lose posledice?
+	@Override
 
-	public Clan save(Clan clan) {
+	public ClanDTO saves(ClanDTO clandto){
+		Clan cl = new Clan();
+		BeanUtils.copyProperties(clandto, cl);
+			
+		clanDao.save(cl);
+		BeanUtils.copyProperties(cl, clandto);
 		
-		clanDao.save(clan);
-		
-	return clan;
-
-	}
-	
-	
-	//  da li ovo ima supline i lose posledice?
-	
-public Clan saveDTO(ClanDTO clanDto) {
-		Class<? extends Clan> clanCast = (new Clan()).getClass();
-		
-		
-	Clan clanC = clanCast.cast(clanDto);
-	
-	
-	
-		clanDao.save(clanC);
-		
-	return clanC;
+	return clandto;
 
 	}
 	
+	@Override
+
 	public Clan findById(Long id) {
 		Optional<Clan> oc = clanDao.findById(id);
 		Clan clan = oc.get();
 		
 	  return clan ;
 	}
+	@Override
 	
 	public void delete(Long  id) {
 		clanDao.deleteById(id);
 
 	}
-	public ResponseEntity<Object> create(Clan clan) {
-		Clan savedClan = clanDao.save(clan);
+	@Override
+	
+	public ResponseEntity<Object> create(ClanDTO clandto) {
+		Clan cl = new Clan();
+		BeanUtils.copyProperties(cl, clandto);
+		Clan savedClan = clanDao.save(cl);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedClan.getId()).toUri();
@@ -73,20 +78,43 @@ public Clan saveDTO(ClanDTO clanDto) {
 		  }  */
 		/*  pri POST metodu odabrati row  tip i JSON/Aplication/json i radi */
 	
-	
-	
-	public ResponseEntity<Object> update( Clan clan) {
+	@Override
+	@Transactional
+	public ResponseEntity<Object> update( Long id,ClanDTO clandto) {
 
-	/*	Optional<Clan> cl = clanDao.findById(clan.getId());
+		Optional<Clan> clp = clanDao.findById(clandto.getId());
 
-		if (!cl.isPresent())
+		if (!clp.isPresent())
+		{
 			return ResponseEntity.notFound().build();
-
-		clan.setId(id);
-	*/
+			
+		}  else 
+		{
+		//dohvati sva polja objekta i prepisi u Entity
+	    Clan clan = clp.get();
+		utility.prekopiraj(clandto,clan);
 		
 		clanDao.save(clan);
 
 		return ResponseEntity.noContent().build();
+		}
+		
 	}
+   public Collection<Clan> findClans(){
+		
+		List<Clan> spisak = new ArrayList<>();
+		for(Clan cc: clanDao.findAll()) {
+			spisak.add(cc);
+		}
+		return spisak;
+	}
+
+    @Override
+    public Page<Clan> findAll(Pageable pageable) {
+      //  treba prepakovati u DTO.  
+	
+	  return clanDao.findAll(pageable);
+}
+
+	
 }

@@ -11,12 +11,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 
-public class Knjigatreninga  {
+public class KnjigaTreninga  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+    //vremeod  i vremedo supredvidjena za prijavu i odjavu sa treninga
     private Date vreme;
     private Double cena;
     private Date vremedo;
@@ -29,10 +29,10 @@ public class Knjigatreninga  {
     @JoinColumn
     private ClanPaket clanPaket;
 
-    public Knjigatreninga() {
+    public KnjigaTreninga() {
     }
 
-    public Knjigatreninga(Date vreme, Double cena, Trener trener, ClanPaket clanPaket) {
+    public KnjigaTreninga(Date vreme, Double cena, Trener trener, ClanPaket clanPaket) {
         this.vreme = vreme;
         this.cena = cena;
         this.trener = trener;
@@ -89,10 +89,10 @@ public class Knjigatreninga  {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Knjigatreninga)) {
+        if (!(object instanceof KnjigaTreninga)) {
             return false;
         }
-        Knjigatreninga other = (Knjigatreninga) object;
+        KnjigaTreninga other = (KnjigaTreninga) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

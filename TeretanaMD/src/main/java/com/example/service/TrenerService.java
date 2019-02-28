@@ -11,6 +11,8 @@ import com.example.domain.Trener;
 import java.net.URI;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class TrenerService {
 	@Autowired
@@ -40,6 +42,8 @@ public class TrenerService {
 		trenerDAO.deleteById(id);
 
 	}
+	
+	
 	public ResponseEntity<Object> create(Trener trener) {
 		Trener savedTrener = trenerDAO.save(trener);
 
@@ -56,7 +60,7 @@ public class TrenerService {
 		/*  pri POST metodu odabrati row  tip i JSON/Aplication/json i radi */
 	
 	
-	
+	@Transactional
 	public ResponseEntity<Object> update( Trener trener) {
 
 	/*	Optional<Trener> cl = TrenerDAO.findById(trener.getId());

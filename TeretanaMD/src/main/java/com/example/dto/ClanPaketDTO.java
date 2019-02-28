@@ -1,4 +1,4 @@
-package com.example.domain.DTO;
+package com.example.dto;
 
 import com.example.domain.Clan;
 import com.example.domain.Paket;

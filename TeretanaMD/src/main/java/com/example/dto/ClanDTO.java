@@ -1,4 +1,4 @@
-package com.example.domain.DTO;
+package com.example.dto;
 
 public class ClanDTO {
 	

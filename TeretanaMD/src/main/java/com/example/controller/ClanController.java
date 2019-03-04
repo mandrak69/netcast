@@ -1,8 +1,11 @@
 package com.example.controller;
 
 import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
-import com.example.service.ClanService;
+import com.example.dto.KupljeniPaketiDTO;
+import com.example.service.intf.ClanIF;
+
 
 
 @RestController    
@@ -24,7 +30,7 @@ public class ClanController {
 	
 	
 	@Autowired
-	private ClanService clanService;
+	private ClanIF clanService;
 	
 	public ClanController() {
 		super();	
@@ -32,17 +38,22 @@ public class ClanController {
 	
 	@GetMapping(path="/all")
 	   public @ResponseBody Collection<Clan> getAllClan() {
-		Collection<Clan> kk = clanService.findClans();
-	 	 // vraca JSON format clanove 
-	   return kk;
+		  List<Clan> spisakClanova = clanService.findAll();
+	 	 
+	   return spisakClanova;
+	}
+	
+	@RequestMapping("/clanovi")
+	public Page<Clan> findAll(Pageable pageable){
+		return clanService.findAll(pageable);
 	}
 	
 	@PostMapping(path="/add") 
 	public @ResponseBody ClanDTO addNewClan (@RequestBody ClanDTO clandto) {
 		
-		 ClanDTO cc = clanService.saves(clandto);
+		 ClanDTO clanAdd = clanService.save(clandto);
 		
-	return cc;
+	return clanAdd;
 	}
 	
 	@GetMapping(path="/get/{id}")
@@ -51,36 +62,29 @@ public class ClanController {
     
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Object> createClan(@RequestBody ClanDTO clandto) {
-		
-		
-		return  ResponseEntity.ok().body(clanService.create(clandto));
-	}
-	
-	
 	
 	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable("id") Long id) {	
+	public void delete(@PathVariable Long id) {	
 		clanService.delete(id);		
 	}	
 	
-	//  nema logike vec je za probu
-	@DeleteMapping("/{clanId}")
-	public void deleteClan(@PathVariable String clanId,@RequestBody Clan clan) {
-			
-		clanService.delete(clan.getId());		
-	}	
 	
-	/*  izmena postojeceg clana preko ID uz optional<> -- mozda pukne*/
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Object> updateClan(@PathVariable("id") Long id,@RequestBody ClanDTO clandto) {
+	public ClanDTO updateClan(@PathVariable Long id,@RequestBody ClanDTO clandto) {
 
-		ResponseEntity<Object> t = clanService.update(id,clandto);
+		 ClanDTO clan_temp = clanService.update(id,clandto);
 
-		return t;
+		return clan_temp;
 	}
+	
+	
+	@RequestMapping(value="/paketi_clana/{id}")
+	public KupljeniPaketiDTO listaPaketaClana(@PathVariable Long id) {
+		return clanService.paketiClana(id);	
+	}
+	
+	
 	
 	
 	

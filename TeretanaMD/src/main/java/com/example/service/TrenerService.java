@@ -1,80 +1,130 @@
 package com.example.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.example.dao.KnjigaTreningaDAO;
 import com.example.dao.TrenerDAO;
+import com.example.domain.KnjigaTreninga;
 import com.example.domain.Trener;
+import com.example.dto.TrenerDTO;
+import com.example.dto.TrenerTerminDTO;
+import com.example.service.intf.TrenerIF;
 
-
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 @Service
-public class TrenerService {
+
+public class TrenerService implements  TrenerIF{
 	@Autowired
-	TrenerDAO trenerDAO;
+	TrenerDAO trenerDao;
 	
-
+	@Autowired
+	KnjigaTreningaDAO knjigatreningaDao;
 	
 	
-	
-
-	public Trener save(Trener trener) {
+	@Override
+	@Transactional
+	public List<Trener> findAll() {
 		
-		trenerDAO.save(trener);
+		return trenerDao.findAll();
+	}
+	
+	@Override
+
+	public TrenerDTO save(TrenerDTO clandto){
+		Trener cl = new Trener();
+		BeanUtils.copyProperties(clandto, cl);
+			
+		trenerDao.save(cl);
+		BeanUtils.copyProperties(cl, clandto);
 		
-	return trener;
+	return clandto;
 
 	}
 	
+	@Override
+
 	public Trener findById(Long id) {
-		Optional<Trener> oc = trenerDAO.findById(id);
-		Trener trener = oc.get();
+		Optional<Trener> oc = trenerDao.findById(id);
+		Trener clan = oc.get();
 		
-	  return trener ;
+	  return clan ;
 	}
+	@Override
 	
 	public void delete(Long  id) {
-		trenerDAO.deleteById(id);
+		trenerDao.deleteById(id);
 
 	}
 	
 	
-	public ResponseEntity<Object> create(Trener trener) {
-		Trener savedTrener = trenerDAO.save(trener);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedTrener.getId()).toUri();
-
-		return ResponseEntity.created(location).build();
-		}
 	
-		/*  {
-		    "name": "Tom",
-		    "passportNumber": "Z1234567"
-		  }  */
-		/*  pri POST metodu odabrati row  tip i JSON/Aplication/json i radi */
-	
-	
+	@Override
 	@Transactional
-	public ResponseEntity<Object> update( Trener trener) {
+	public TrenerDTO update( TrenerDTO trenrdto) {
 
-	/*	Optional<Trener> cl = TrenerDAO.findById(trener.getId());
+		Optional<Trener> cl_temp = trenerDao.findById(trenrdto.getId());
 
-		if (!cl.isPresent())
-			return ResponseEntity.notFound().build();
-
-		trener.setId(id);
-	*/
+		if (!cl_temp.isPresent())
 		
-		trenerDAO.save(trener);
+			return null;
+			
+		//dohvati sva polja objekta i prepisi u Entity
+		Trener clan = cl_temp.get();
+		utility.prekopiraj(trenrdto,clan);
+		
+		trenerDao.save(clan);
+		utility.prekopiraj(clan,trenrdto);
 
-		return ResponseEntity.noContent().build();
+		return trenrdto;
+		
+		
 	}
+   public Collection<Trener> findTreners(){
+		
+		List<Trener> spisak = new ArrayList<>();
+		for(Trener cc: trenerDao.findAll()) {
+			spisak.add(cc);
+		}
+		return spisak;
+	}
+
+
+	@Transactional
+	public List<KnjigaTreninga> treninziTrenera(Long id) {
+		Optional<Trener> tren_temp = trenerDao.findById(id);
+		if(tren_temp.isPresent()) {
+			Trener trener = tren_temp.get();
+			List<KnjigaTreninga> treninzitrenera = knjigatreningaDao.findByTrener(trener);
+			
+			
+			return treninzitrenera;
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Page<Trener> findAll(Pageable pageable) {
+	 //  List<Trener> clanovi=clanDao.getAllClansByName(null);
+		return trenerDao.findAll(pageable);
+	}
+
+	@Override
+	public TrenerTerminDTO listtreninga(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.domain;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,9 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 @Entity
-public class Paket {
+public class Paket  {
+    
+ 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +26,9 @@ public class Paket {
     private Double cena;
   
     private Integer trajanje;
-    
+   
     @OneToMany(mappedBy = "paket", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<ClanPaket> clanPaketi = new HashSet<>();
 
     public Paket() {

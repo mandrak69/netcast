@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,18 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.PaketDAO;
 import com.example.domain.Paket;
+
 import com.example.dto.PaketDTO;
-import com.example.service.PaketService;
+
+import com.example.service.intf.PaketIF;
 
 @RestController    
 @RequestMapping(path="/paket") 
 
 public class PaketController {
-	@Autowired 
-	          
+	
+	@Autowired          
 	private PaketDAO paketDao;
 	@Autowired
-	private PaketService paketService;
+	private PaketIF paketService;
 			
 	public PaketController() {
 		super();
@@ -45,15 +49,10 @@ public class PaketController {
 	@PostMapping(path="/add") 
 	public @ResponseBody PaketDTO addNewPaket (@RequestBody PaketDTO paketdto) {
 		
-		paketService.saves(paketdto);
+		paketService.save(paketdto);
 		return paketdto;
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Object> createPaket(@RequestBody PaketDTO paketdto) {
-			
-		return paketService.create(paketdto);
-	}
 	
 	
 	@GetMapping(path="/getId/{id}")
@@ -66,7 +65,7 @@ public class PaketController {
 	
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public void deletePaket(@PathVariable("id") Long id) {
+	public void deletePaket(@PathVariable Long id) {
 		paketDao.deleteById(id);		
 	}
 	
@@ -77,11 +76,23 @@ public class PaketController {
 	}
 	
 	
-	@PutMapping("/update")
-	public ResponseEntity<Object> updatePaket(@RequestBody PaketDTO paketdto) {
+	@PutMapping("/update/{id}")
+	public PaketDTO updatePaket(@RequestBody PaketDTO paket) {
 
-		ResponseEntity<Object> t = paketService.update(paketdto);
+		 PaketDTO paket_temp = paketService.update(paket);
 
-		return t;
+		return paket_temp;
+	}
+	
+	@GetMapping("/list")
+	public String paketList(Model model, Pageable pageable) {
+	        Page<Paket> pages = paketService.findAll(pageable) ;
+	        model.addAttribute("number", pages.getNumber());
+	        model.addAttribute("totalPages", pages.getTotalPages());
+	        model.addAttribute("totalElements",       
+	                                      pages.getTotalElements());
+	        model.addAttribute("size", pages.getSize());
+	        model.addAttribute("users", pages.getContent());
+	        return "/paket/list";
 	}
 }

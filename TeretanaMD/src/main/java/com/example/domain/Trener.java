@@ -1,17 +1,20 @@
 package com.example.domain;
 
+
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlTransient;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 @Entity
-public class Trener  {
+public class Trener   {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +27,13 @@ public class Trener  {
      private Double cena;
      
      private String prezime;
-     
+     @JsonManagedReference
     @OneToMany(mappedBy = "trener")
     private Set<KnjigaTreninga> knjigatreningaSet= new HashSet<>();;
 
+    private Long nivo;
+    
+    
     public Trener() {
     } 
 
@@ -92,7 +98,16 @@ public class Trener  {
         return true;
     }
 
-    @Override
+	
+    public Long getNivo() {
+		return nivo;
+	}
+
+	public void setNivo(Long nivo) {
+		this.nivo = nivo;
+	}
+
+	@Override
     public String toString() {
         return "Trener[ id=" + id + " ]";
     }

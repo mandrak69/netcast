@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.net.URI;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -10,11 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
 import com.example.dao.ClanPaketDAO;
 
 import com.example.domain.Clan;
@@ -23,6 +18,8 @@ import com.example.domain.Paket;
 import com.example.dto.ClanDTO;
 import com.example.dto.ClanPaketDTO;
 import com.example.dto.PaketDTO;
+
+import exception.ResourceNotFoundException;
 
 
 
@@ -47,53 +44,54 @@ public class ClanPaketService {
 	
 	
 	public ClanPaket save(ClanPaketDTO clanPaketDto) {
-		Optional<ClanPaket> clpak = clanPaketDao.findById(clanPaketDto.getId());
-		clanPaketDao.save(clpak.get());
 		
-	return clpak.get();
+		
+		Optional<ClanPaket> clpak = clanPaketDao.findById(clanPaketDto.getId());
+		if (clpak.isPresent()) return null;// ima vec paket pod tim ID
+		
+		ClanPaket clanpaket = clanPaketDao.save(clpak.get());
+		
+		
+	return clanpaket;
 
 	}
 	
 	public ClanPaket findById(Long id) {
-		Optional<ClanPaket> oc = clanPaketDao.findById(id);
-		ClanPaket clanPaket = oc.get();
+		//  sa greskom obradjenom preko klase
 		
-	  return clanPaket ;
+		
+		ClanPaket clanPaket = clanPaketDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("ClanPaket", "id", id));
+		
+		//ClanPaket clanPaket = optcl.get();
+		
+	  return clanPaket;
+			  
 	}
 	
 	public void deleteById(Long  id) {
 		clanPaketDao.deleteById(id);
 
 	}
-	public ResponseEntity<Object> create(ClanPaket clanPaket) {
-		ClanPaket savedClanPaket = clanPaketDao.save(clanPaket);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedClanPaket.getId()).toUri();
-
-		return ResponseEntity.created(location).build();
-		}
+	
 	
 		
-	public ResponseEntity<Object> update( ClanPaketDTO clanPaketdto) {
+	public ClanPaketDTO update( ClanPaketDTO clanPaketdto) {
 
 		Optional<ClanPaket> clp = clanPaketDao.findById(clanPaketdto.getId());
 
 		if (!clp.isPresent())
-		{
-			return ResponseEntity.notFound().build();
+		return null;
 			
-		}  else 
-		{
+		
 		//dohvati sva polja objekta i prepisi u Entity
 	    ClanPaket clanPaket = clp.get();
 		
 	    utility.prekopiraj(clanPaketdto,clanPaket);
 		
 		clanPaketDao.save(clanPaket);
-
-		return ResponseEntity.noContent().build();
-		}
+		utility.prekopiraj(clanPaket,clanPaketdto);
+		return clanPaketdto;
+		
 		
 	}
 
@@ -109,24 +107,14 @@ public class ClanPaketService {
 	    clpl.setPaket(pl.get());
 		clanPaketDao.save(clpl);
 		
-		
+		return;
 	}
 
-	public Object create(ClanDTO clanDto, PaketDTO paketDto) {
-
-	    Optional<Clan> cl = clanService.clanDao.findById(clanDto.getId()) ;
-	    
-	    Optional<Paket> pl = paketService.paketDAO.findById(paketDto.getId());
-	    ClanPaket clpl = new ClanPaket();
-	    clpl.setClan(cl.get());
-	    clpl.setPaket(pl.get());
-		clanPaketDao.save(clpl);
-		return null;
-	}
+	
 
 
 
-	public void aktiviraj(Long id) {
+	public String aktiviraj(Long id) {
 		// dohvati clanpaket.id aktiviraj paket , dohvati trajanje u minutama
 
 		 // long sad = System.currentTimeMillis();
@@ -142,6 +130,9 @@ public class ClanPaketService {
 		 Date enddat = Date.from(kasnije);
 		clanPaketDao.findById(id).get().setIstice(enddat);
 		// mozda vratiti poruku aktivirano
+		
+		return "Aktiviran paket";
+		
 	}
 	 public Collection<ClanPaket> findAllClanPaket(){
 			

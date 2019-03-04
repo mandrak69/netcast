@@ -1,17 +1,15 @@
 package com.example.service;
 
-import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.example.dao.KnjigaTreningaDAO;
 
 import com.example.domain.KnjigaTreninga;
-
+import com.example.domain.Operater;
 import com.example.dto.KnjigaTreningaDTO;
 
 
@@ -42,14 +40,6 @@ public class KnjigaTreningaService {
 		knjigaTreningaDao.deleteById(id);
 
 	}
-	public ResponseEntity<Object> create(KnjigaTreninga knjigaTreninga) {
-		KnjigaTreninga savedKnjigaTreninga = knjigaTreningaDao.save(knjigaTreninga);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedKnjigaTreninga.getId()).toUri();
-
-		return ResponseEntity.created(location).build();
-		}
 	
 		
 	public ResponseEntity<Object> update( KnjigaTreningaDTO knjigaTreningadto) {
@@ -71,5 +61,12 @@ public class KnjigaTreningaService {
 		return ResponseEntity.noContent().build();
 		}
 		
+	}
+	public List<KnjigaTreninga> findByOperater(Operater operater) {
+		
+		 List<KnjigaTreninga> oc = knjigaTreningaDao.findByOperater(operater);
+		
+		
+	  return oc ;
 	}
 }

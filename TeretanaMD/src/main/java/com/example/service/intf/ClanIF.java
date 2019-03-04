@@ -1,29 +1,37 @@
 package com.example.service.intf;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+
 
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
+import com.example.dto.KupljeniPaketiDTO;
+
 
 
 public interface ClanIF {
 	
 	
+	public List<Clan> findAll();
 	
-	public ClanDTO saves(ClanDTO clandto);
+	public ClanDTO save(ClanDTO clandto);
 	
 	public Clan findById(Long id) ;
 	
 	public void delete(Long  id);
 	
-	public ResponseEntity<Object> create(ClanDTO clandto);
+	public KupljeniPaketiDTO paketiClana(Long id);
 	
-	public ResponseEntity<Object> update(Long id, ClanDTO clandto);
+	public ClanDTO update(Long id, ClanDTO clandto);
 	
 	
 
 	public Page<Clan> findAll(Pageable pageable);
+	
+	
+	
 	
 }

@@ -1,40 +1,45 @@
 package com.example.domain;
 
+
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-
-
-import javax.persistence.*;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 
-
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 @Entity
-public class ClanPaket  {
+public class ClanPaket   {
     
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
      
     
     @ManyToOne
     @JoinColumn(nullable = false, referencedColumnName = "id")
+    @JsonBackReference
     private Clan clan;
 
     @ManyToOne
     @JoinColumn(nullable = false, referencedColumnName = "id")
+    @JsonBackReference
     private Paket paket;
 
     private Date datum;
     private Date istice;
-    
+    @JsonManagedReference
     @OneToMany(mappedBy = "clanPaket", cascade = CascadeType.ALL)
     private Set<KnjigaTreninga> knjigaTreninga=new  HashSet<>();
        

@@ -1,5 +1,6 @@
 package com.example.domain;
 
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,11 +10,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+//import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+//import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 @Entity
-public class Clan {
+public class Clan  {
+    
+ 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +34,16 @@ public class Clan {
     private String prezime;
     private String pass;
     private String email;
-
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "clan", cascade = CascadeType.ALL)
     private Set<ClanPaket> clanPaketi;
 
+    @ManyToOne
+    @JoinColumn(nullable = true, referencedColumnName = "id")
+    @JsonBackReference
+    private Grupa grupa;
+    
     public Clan() {
     }
 
@@ -116,6 +134,20 @@ public class Clan {
 	public void setClanPaketi(Set<ClanPaket> clanPaketi) {
 		this.clanPaketi = clanPaketi;
 	}
+
+
+
+	public Grupa getGrupa() {
+		return grupa;
+	}
+
+
+
+	public void setGrupa(Grupa grupa) {
+		this.grupa = grupa;
+	}
     
+	
+	
 }
 

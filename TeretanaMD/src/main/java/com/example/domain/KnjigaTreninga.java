@@ -1,5 +1,6 @@
 package com.example.domain;
 
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -7,11 +8,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 import javax.persistence.ManyToOne;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-public class KnjigaTreninga  {
+@Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+public class KnjigaTreninga   {
+    
+ 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,27 +33,43 @@ public class KnjigaTreninga  {
     
     @ManyToOne(optional = true)
     @JoinColumn
+    @JsonBackReference
     private Trener trener;
 
     @ManyToOne(optional = false)
     @JoinColumn
+    @JsonBackReference
     private ClanPaket clanPaket;
-
+    
+    @ManyToOne(optional = true)
+    @JoinColumn
+    @JsonBackReference
+    private Operater operater;
+    
     public KnjigaTreninga() {
     }
 
-    public KnjigaTreninga(Date vreme, Double cena, Trener trener, ClanPaket clanPaket) {
+    public KnjigaTreninga(Date vreme, Double cena, Trener trener, ClanPaket clanPaket,Operater operater) {
         this.vreme = vreme;
         this.cena = cena;
         this.trener = trener;
         this.clanPaket = clanPaket;
+        this.operater=operater;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Operater getOperater() {
+		return operater;
+	}
+
+	public void setOperater(Operater operater) {
+		this.operater = operater;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
 

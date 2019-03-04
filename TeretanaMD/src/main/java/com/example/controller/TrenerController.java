@@ -69,7 +69,15 @@ public class TrenerController {
 		public void deleteTrener(@PathVariable Long id) {
 			trenerDao.deleteById(id);
 			
-		}		
+		}	
+		@GetMapping(path="/odredicene")
+		public  void getTrenerbyId() {
+	    //  prebroji broj treninga koje je trener odradio iz KNJIGE i setuj nivo trenera= brojtreninga/10
+			
+			trenerService.odredinivoetrenerima();
+			
+	    return ;
+		}
 		
 	}
 

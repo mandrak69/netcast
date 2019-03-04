@@ -16,43 +16,45 @@ import com.example.domain.ClanPaket;
 import com.example.domain.KnjigaTreninga;
 import com.example.domain.Trener;
 
-
-
-
-@RestController    
-@RequestMapping(path="/knjiga") 
+@RestController
+@RequestMapping(path = "/knjiga")
 public class KnjigaTreningaController {
-	
-	@Autowired      
+
+	@Autowired
 	private KnjigaTreningaDAO knjigaTreningaDao;
-    @Autowired
-    private ClanPaketDAO clanPaketDao;
-    @Autowired
+	@Autowired
+	private ClanPaketDAO clanPaketDao;
+	@Autowired
 	private TrenerDAO trenerDao;
 
-	@PostMapping(path="/add") 
-	public @ResponseBody String addNewKnjigaTreninga ( @RequestParam Long trenerId,@RequestParam Long clanPaketId,@RequestParam Double cena) {
-		
-    KnjigaTreninga n = new KnjigaTreninga();
-	n.setCena(cena);
-	Optional<ClanPaket> pak = clanPaketDao.findById(clanPaketId);
-	pak.ifPresent((ph)->n.setClanPaket(ph));
-	Optional<Trener> tre = trenerDao.findById(trenerId);
-	tre.ifPresent((ph)->n.setTrener(ph));
-	 
+	@PostMapping(path = "/add")
+	public @ResponseBody String addNewKnjigaTreninga(@RequestParam Long trenerId, @RequestParam Long clanPaketId,
+			@RequestParam Double cena) {
+
+		KnjigaTreninga n = new KnjigaTreninga();
+		n.setCena(cena);
+		Optional<ClanPaket> pak = clanPaketDao.findById(clanPaketId);
+		pak.ifPresent((ph) -> n.setClanPaket(ph));
+		Optional<Trener> tre = trenerDao.findById(trenerId);
+		tre.ifPresent((ph) -> n.setTrener(ph));
+
 		knjigaTreningaDao.save(n);
 
 		return "Saved";
 	}
 
-	@GetMapping(path="/all")
+	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<KnjigaTreninga> getAllClan() {
-		
+
 		return knjigaTreningaDao.findAll();
 	}
-	@GetMapping(path="/getId/{id}")
+
+	@GetMapping(path = "/getId/{id}")
 	public @ResponseBody Optional<KnjigaTreninga> getKnjigaTreningabyId(@RequestParam Long id) {
-    //  JSON clanovi
-    return knjigaTreningaDao.findById(id);
-}
+		// JSON clanovi
+		return knjigaTreningaDao.findById(id);
+	}
+	
+	
+
 }

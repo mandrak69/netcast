@@ -124,6 +124,18 @@ public class TrenerService implements  TrenerIF{
 		return null;
 	}
 
+	public void odredinivoetrenerima() {
+		// TODO Auto-generated method stub
+	/*	List<Trener> lista = trenerDao.findAll();
+		
+		for (Trener tre:lista) {
+		//	Object brtreninga = knjigatreningaDao.count(tre);
+			
+			
+		}*/
+		
+	}
+
 	
 }
 

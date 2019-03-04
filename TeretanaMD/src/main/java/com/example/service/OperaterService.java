@@ -56,7 +56,7 @@ public class OperaterService implements OperaterIF{
 	@Override
 	public List<Operater> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return operaterDao.findAll();
 	}
 
 

@@ -1,9 +1,9 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.User;
@@ -24,12 +24,12 @@ public class SecureController {
 		return "Login Successful!";
 	}
 
-	@RequestMapping(value = "/user/email", method = RequestMethod.POST)
+	@PostMapping(value = "/user/email")
 	public User findByEmail(@RequestBody String email) {
 		return userService.findByEmail(email);
 	}
 
-	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
+	@PostMapping(value = "/user/update")
 	public User updateUser(@RequestBody User user) {
 		return userService.save(user);
 	}

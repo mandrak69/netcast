@@ -42,7 +42,7 @@ public class GrupaController {
 	   return spisakgrupa;
 	}
 	
-	@RequestMapping("/clanovi")
+	@GetMapping("/clanovi")
 	public Page<Grupa> findAll(Pageable pageable){
 		return grupaService.findAll(pageable);
 	}
@@ -77,12 +77,7 @@ public class GrupaController {
 		return grupa_temp;
 	}
 	
-	/*
-	@RequestMapping(value="/clanovi_grupe/{id}")
-	public ClanoviGrupeDTO listClanGrupa(@PathVariable Long id) {
-		return grupaService.clanovigrupe(id);	
-	}
-	*/
+	
 	
 	
 	

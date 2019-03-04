@@ -16,76 +16,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
 import com.example.dto.KupljeniPaketiDTO;
 import com.example.service.intf.ClanIF;
 
-
-
-@RestController    
-@RequestMapping(path="/clan") 
+@RestController
+@RequestMapping(path = "/clan")
 public class ClanController {
-	
-	
+
 	@Autowired
 	private ClanIF clanService;
-	
+
 	public ClanController() {
-		super();	
+		super();
 	}
-	
-	@GetMapping(path="/all")
-	   public @ResponseBody Collection<Clan> getAllClan() {
-		  List<Clan> spisakClanova = clanService.findAll();
-	 	 
-	   return spisakClanova;
+
+	@GetMapping(path = "/all")
+	public @ResponseBody Collection<Clan> getAllClan() {
+		List<Clan> spisakClanova = clanService.findAll();
+
+		return spisakClanova;
 	}
-	
-	@RequestMapping("/clanovi")
-	public Page<Clan> findAll(Pageable pageable){
+
+	@GetMapping("/clanovi")
+	public Page<Clan> findAll(Pageable pageable) {
 		return clanService.findAll(pageable);
 	}
-	
-	@PostMapping(path="/add") 
-	public @ResponseBody ClanDTO addNewClan (@RequestBody ClanDTO clandto) {
-		
-		 ClanDTO clanAdd = clanService.save(clandto);
-		
-	return clanAdd;
-	}
-	
-	@GetMapping(path="/get/{id}")
-	public @ResponseBody Clan getClanbyId(@PathVariable Long id)  {				
-    return clanService.findById(id);
-    
-	}
-	
-	
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable Long id) {	
-		clanService.delete(id);		
-	}	
-	
-	
-	
-	@PutMapping("/update/{id}")
-	public ClanDTO updateClan(@PathVariable Long id,@RequestBody ClanDTO clandto) {
 
-		 ClanDTO clan_temp = clanService.update(id,clandto);
+	@PostMapping(path = "/add")
+	public @ResponseBody ClanDTO addNewClan(@RequestBody ClanDTO clandto) {
+
+		ClanDTO clanAdd = clanService.save(clandto);
+
+		return clanAdd;
+	}
+
+	@GetMapping(path = "/get/{id}")
+	public @ResponseBody Clan getClanbyId(@PathVariable Long id) {
+		return clanService.findById(id);
+
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void delete(@PathVariable Long id) {
+		clanService.delete(id);
+	}
+
+	@PutMapping("/update/{id}")
+	public ClanDTO updateClan(@PathVariable Long id, @RequestBody ClanDTO clandto) {
+
+		ClanDTO clan_temp = clanService.update(id, clandto);
 
 		return clan_temp;
 	}
-	
-	
-	@RequestMapping(value="/paketi_clana/{id}")
+
+	@GetMapping(value = "/paketi_clana/{id}")
 	public KupljeniPaketiDTO listaPaketaClana(@PathVariable Long id) {
-		return clanService.paketiClana(id);	
+		return clanService.paketiClana(id);
 	}
-	
-	
-	
-	
-	
+
 }

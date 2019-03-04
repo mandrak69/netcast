@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,12 +26,12 @@ public class UserController {
 	@Autowired
 	private UserIF userService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@PostMapping(value = "/register")
 	public User registerUser(@RequestBody User user) {
 		return userService.save(user);
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping(value = "/login")
 	public String login(@RequestBody User login) throws ServletException {
 
 		String jwtToken = "";
@@ -51,7 +52,7 @@ public class UserController {
 		String pwd = user.getPassword();
 
 		if (!password.equals(pwd)) {
-			throw new ServletException("Neispravno kor. i,e ili lozinka");
+			throw new ServletException("Neispravno korisnicko  ime ili lozinka");
 		}
 
 		jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())

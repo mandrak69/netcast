@@ -23,7 +23,7 @@ public class LoginService {
 	@Autowired
 	OperaterDAO operaterDao;
 	
-	public static final String KEY = "2456D";
+	public static final String KEY = "1335A";
 
 	
 	public LoginService() {
@@ -46,7 +46,7 @@ public class LoginService {
 		return null;
 		
 	}
-	
+	  
 	public String getOperaterEmail(@RequestParam String token) {
 		Jws<Claims> jws = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
 		
@@ -58,4 +58,5 @@ public class LoginService {
 		String userEmail = this.getOperaterEmail(token);
 		return userEmail != null;
 	}
+	
 }

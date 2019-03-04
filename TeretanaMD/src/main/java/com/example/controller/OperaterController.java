@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +33,7 @@ import org.jsondoc.core.annotation.ApiMethod;
 
 
 @RestController
-@RequestMapping(value = "/operater", method = RequestMethod.GET)
+@RequestMapping(value = "/operater")
 public class OperaterController {
 	
 	@Autowired
@@ -53,7 +52,7 @@ public class OperaterController {
 	}
 
 
-@PostMapping(path="/add") 
+    @PostMapping(path="/add") 
 	public @ResponseBody OperaterDTO addNewOperater (@RequestBody OperaterDTO operaterdto) {
 		
 	OperaterDTO radAdd = operaterService.save(operaterdto);
@@ -62,7 +61,7 @@ public class OperaterController {
 	}
 	
     @ApiMethod(description="login")
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping(value = "/login")
 	public String login(@RequestBody OperaterDTO operaterDTO) throws ServletException {
 		return loginService.authorize(operaterDTO);
 	}
@@ -79,7 +78,7 @@ public class OperaterController {
 	   return spisoperatera;
 	}
 	
-	@RequestMapping("/radnici")
+	@GetMapping("/radnici")
 	public Page<Operater> findAll(Pageable pageable){
 		return operaterService.findAll(pageable);
 	}

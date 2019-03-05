@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dao.ClanDAO;
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
 import com.example.dto.KupljeniPaketiDTO;
@@ -28,9 +27,7 @@ public class ClanController {
 
 	@Autowired
 	private ClanIF clanService;
-	@Autowired
-	private ClanDAO clanDao;
-
+	
 	public ClanController() {
 		super();
 	}

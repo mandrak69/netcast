@@ -36,16 +36,12 @@ import org.jsondoc.core.annotation.ApiMethod;
 @RequestMapping(value = "/operater")
 public class OperaterController {
 	
-	@Autowired
-	
+	@Autowired	
 	private LoginService loginService;
 	
 	@Autowired
 	private OperaterIF operaterService;
-	
-	
-	
-	
+		
 	public OperaterController() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -78,7 +74,7 @@ public class OperaterController {
 	   return spisoperatera;
 	}
 	
-	@GetMapping("/radnici")
+	@GetMapping("/operateri")
 	public Page<Operater> findAll(Pageable pageable){
 		return operaterService.findAll(pageable);
 	}

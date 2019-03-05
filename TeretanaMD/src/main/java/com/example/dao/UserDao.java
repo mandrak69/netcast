@@ -9,7 +9,7 @@ import com.example.domain.User;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
-	User save(User user);
+	
 
 	User findByEmail(String email);
 }

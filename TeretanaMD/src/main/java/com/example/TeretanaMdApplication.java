@@ -1,10 +1,10 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.example.dao.ClanDAO;
 import com.example.dao.ClanPaketDAO;
@@ -20,6 +20,8 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+@EnableScheduling
 @SpringBootApplication
 public class TeretanaMdApplication {
 

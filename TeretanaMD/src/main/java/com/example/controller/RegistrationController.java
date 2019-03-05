@@ -46,7 +46,7 @@ public class RegistrationController {
 
 		
 		user.setFirstName("Dragan");
-		user.setLastName("netcast");
+		user.setLastName("Markovic");
 		user.setEmail("dm2005ss@gmail.com");
 		
 		try {

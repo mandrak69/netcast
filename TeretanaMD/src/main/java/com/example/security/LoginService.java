@@ -28,11 +28,12 @@ public class LoginService {
 	
 	public LoginService() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	
-
+// provera autorizacije po prosledjenom objektu -email i password zahtevani
+	
 	public String authorize(OperaterDTO operaterDTO) {
 		Operater operater=operaterDao.findByEmailAndPassword(operaterDTO.getEmail(), operaterDTO.getPassword());
 		if(operater!=null) {

@@ -21,7 +21,6 @@ import com.example.dao.ClanPaketDAO;
 import com.example.domain.Clan;
 import com.example.domain.ClanPaket;
 import com.example.domain.Paket;
-import com.example.domain.Trener;
 import com.example.dto.ClanDTO;
 import com.example.dto.ClanovaDTO;
 import com.example.dto.KupljeniPaketiDTO;

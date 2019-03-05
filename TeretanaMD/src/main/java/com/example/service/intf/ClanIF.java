@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
 import com.example.dto.KupljeniPaketiDTO;
@@ -27,7 +25,7 @@ public interface ClanIF {
 	
 	public ClanDTO update(Long id, ClanDTO clandto);
 	
-	
+	public long countByIme(String tenantName) ;
 
 	public Page<Clan> findAll(Pageable pageable);
 	

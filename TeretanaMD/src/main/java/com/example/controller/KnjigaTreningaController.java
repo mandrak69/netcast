@@ -55,6 +55,30 @@ public class KnjigaTreningaController {
 		return knjigaTreningaDao.findById(id);
 	}
 	
+	//  prebroji broj treninga odradjenih od strane trenera po id
+	@PostMapping("/prebroj")
+	public long prebroj(@RequestParam Long id) {
+		//Long id_tren = trener.getId();
+		Optional<Trener> tren = trenerDao.findById(id);
+		if (tren.isPresent()) {
+		return knjigaTreningaDao.countByTrener(tren.get());
+		}
+		return 0;
+	}
+//  prebroji broj treninga odradjenih od strane trenera po id
+	@PostMapping("/setujNivoTrenera")
+	public long setujNivoTrenera(@RequestParam Long id) {
+		//Long id_tren = trener.getId();
+		Optional<Trener> ima_tren = trenerDao.findById(id);
+		if (ima_tren.isPresent()) {
+			Trener tren = ima_tren.get();
+			long novi_nivo = knjigaTreningaDao.countByTrener(tren)/10;
+			tren.setNivo(novi_nivo);
+			trenerDao.save(tren);	
+		return novi_nivo;
+		}
+		return 0;
+	}
 	
 
 }

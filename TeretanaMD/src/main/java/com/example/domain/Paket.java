@@ -31,10 +31,21 @@ public class Paket  {
     @JsonManagedReference
     private Set<ClanPaket> clanPaketi = new HashSet<>();
 
-    public Paket() {
-    }
+    
 
-    public Paket(String ime) {
+    public Paket() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Paket(String ime, Double cena, Integer trajanje) {
+		super();
+		this.ime = ime;
+		this.cena = cena;
+		this.trajanje = trajanje;
+	}
+
+	public Paket(String ime) {
         this.ime = ime;
     }
 

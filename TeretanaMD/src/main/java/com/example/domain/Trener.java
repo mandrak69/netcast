@@ -37,7 +37,17 @@ public class Trener   {
     public Trener() {
     } 
 
-    public Long getId() {
+    public Trener(String ime, String prezime, Double cena,  Long nivo) {
+		super();
+		this.ime = ime;
+		this.cena = cena;
+		this.prezime = prezime;
+		this.nivo = nivo;
+	}
+
+	
+
+	public Long getId() {
         return id;
     }
 

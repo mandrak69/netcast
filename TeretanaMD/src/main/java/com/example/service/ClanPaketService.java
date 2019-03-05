@@ -142,5 +142,7 @@ public class ClanPaketService {
 			}
 			return spisak;
 		}
+	 
+	 
 	
 }

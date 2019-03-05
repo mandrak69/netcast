@@ -21,7 +21,9 @@ import com.example.dao.ClanPaketDAO;
 import com.example.domain.Clan;
 import com.example.domain.ClanPaket;
 import com.example.domain.Paket;
+import com.example.domain.Trener;
 import com.example.dto.ClanDTO;
+import com.example.dto.ClanovaDTO;
 import com.example.dto.KupljeniPaketiDTO;
 import com.example.service.intf.ClanIF;
 
@@ -134,5 +136,16 @@ public class ClanService implements ClanIF {
 		return clanDao.findAll(pageable);
 	}
 
+	
+	public List<ClanovaDTO> findclanova() {
+		// TODO Auto-generated method stub
+		List<ClanovaDTO> x = clanDao.findClanCount();
+		return x;
+	}
+	
+	
+	public long countByIme(String tenantName) {
+	    return clanDao.countByIme(tenantName);
+	}
 	
 }

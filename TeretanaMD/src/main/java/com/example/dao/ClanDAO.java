@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Clan;
+import com.example.dto.ClanovaDTO;
 
 @Repository
 public interface ClanDAO extends JpaRepository<Clan, Long> {
@@ -16,11 +17,22 @@ public interface ClanDAO extends JpaRepository<Clan, Long> {
    
 
 	Iterable<Clan> findByPrezime(String prezime);
+	
+	final String getAllClansByName= "from Clan order by value DESC";
 	@Query(getAllClansByName)
 	List<Clan> getAllClansByName(Pageable pageable);
 
-	final String getAllClansByName= "from Clan order by value DESC";
-
 	
+
+	@Query("select new map(count(v) as cnt, clan.ime) from Clan clan group by clan.ime")
+	public List<ClanovaDTO> findClanCount();
     
+	
+	List<Clan> findAllClanByIme(String ime );
+
+	//List<Clan> findByIme(String imeclana,Pageable pageRequest);
+	    
+	long countByIme(String imeclana);
+
+
 }

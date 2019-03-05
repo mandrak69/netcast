@@ -19,7 +19,8 @@ public interface KnjigaTreningaDAO extends JpaRepository<KnjigaTreninga, Long> {
 	List<KnjigaTreninga> findByTrener(Trener trener);
 	List<KnjigaTreninga> findByVremeBetween(Date vreme, Date vremedo);
 	List<KnjigaTreninga> findByOperater(Operater operater);
-
+	long countByTrener(Trener trener);
+	
 
 	
     

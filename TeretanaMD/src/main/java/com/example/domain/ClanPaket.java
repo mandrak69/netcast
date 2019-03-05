@@ -52,7 +52,17 @@ public class ClanPaket   {
         this.datum = datum;
     }
 
-    public Long getId() {
+    public ClanPaket(Clan clan, Paket paket) {
+		super();
+		this.clan = clan;
+		this.paket = paket;
+	}
+
+	
+
+	
+
+	public Long getId() {
 		return id;
 	}
 

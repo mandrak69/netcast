@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dao.ClanDAO;
 import com.example.domain.Clan;
 import com.example.dto.ClanDTO;
 import com.example.dto.KupljeniPaketiDTO;
@@ -27,6 +28,8 @@ public class ClanController {
 
 	@Autowired
 	private ClanIF clanService;
+	@Autowired
+	private ClanDAO clanDao;
 
 	public ClanController() {
 		super();
@@ -75,5 +78,11 @@ public class ClanController {
 	public KupljeniPaketiDTO listaPaketaClana(@PathVariable Long id) {
 		return clanService.paketiClana(id);
 	}
+	
+	@GetMapping("/prebroj")
+	public long prebroj() {
+		return clanService.countByIme("Jack");
+	}
+	
 
 }

@@ -17,12 +17,15 @@ import com.example.domain.Trener;
 
 import java.util.Date;
 
+import org.jsondoc.spring.boot.starter.EnableJSONDoc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 @EnableScheduling
 @SpringBootApplication
+@EnableJSONDoc
+
 public class TeretanaMdApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(TeretanaMdApplication.class);

@@ -3,9 +3,15 @@ package com.example.controller;
 import java.util.Collection;
 import java.util.List;
 
+import org.jsondoc.core.annotation.ApiErrors;
+import org.jsondoc.core.annotation.ApiHeaders;
+import org.jsondoc.core.annotation.ApiMethod;
+import org.jsondoc.core.annotation.ApiResponseObject;
+import org.jsondoc.core.pojo.ApiVerb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.domain.Grupa;
 import com.example.dto.GrupaDTO;
 import com.example.service.intf.GrupaIF;
+
+import org.jsondoc.core.annotation.ApiError;
+
+
+//import org.jsondoc.core.annotation.ApiParam;
 
 
 
@@ -55,8 +66,22 @@ public class GrupaController {
 	return grupaAdd;
 	}
 	
-	@GetMapping(path="/get/{id}")
-	public @ResponseBody Grupa getGrupabyId(@PathVariable Long id)  {				
+	
+	@ApiMethod(
+	        path = "/get/{id}",
+	        verb = ApiVerb.GET,
+	        description = "Gets all groups ",
+	        produces = { MediaType.APPLICATION_JSON_VALUE },
+	        consumes = { MediaType.APPLICATION_JSON_VALUE },
+	       
+	        responsestatuscode = "201 - Created"
+	)
+	
+	@ApiErrors(apierrors={
+	        @ApiError(code="2000", description="Group not found"),
+	        @ApiError(code="9000", description="Illegal argument")
+	})
+	public @ApiResponseObject Grupa getGrupabyId(@PathVariable Long id)  {				
     return grupaService.findById(id);
     
 	}

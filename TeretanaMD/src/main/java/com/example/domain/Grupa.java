@@ -10,9 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 //@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 @Entity
+@ApiObject(show = false)
 public class Grupa  {
     
  
@@ -20,9 +25,9 @@ public class Grupa  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ApiObjectField(description = "The name of the group")
     private String ime;
-   
+    @ApiObjectField(description = "The number between 0-100 for discount in percent ")
     private int popust;
   
     

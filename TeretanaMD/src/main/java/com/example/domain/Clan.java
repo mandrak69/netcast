@@ -21,6 +21,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 //import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 //@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
+
+@ApiObject
 @Entity
 public class Clan  {
     
@@ -28,11 +33,15 @@ public class Clan  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiObjectField
     private Long id;
+    
+    @ApiObjectField(description = "The name of the member")
     private String ime;
     
     private String prezime;
     private String pass;
+    @ApiObjectField(description = "The member's e-mail")
     private String email;
     
     @JsonManagedReference
@@ -42,6 +51,7 @@ public class Clan  {
     @ManyToOne
     @JoinColumn(nullable = true, referencedColumnName = "id")
     @JsonBackReference
+    @ApiObjectField(description = "The member's group")
     private Grupa grupa;
     
     public Clan() {

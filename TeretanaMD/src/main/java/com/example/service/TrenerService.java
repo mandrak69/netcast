@@ -79,10 +79,10 @@ public class TrenerService implements  TrenerIF{
 			
 		//dohvati sva polja objekta i prepisi u Entity
 		Trener clan = cl_temp.get();
-		utility.prekopiraj(trenrdto,clan);
+		MyUtil.prekopiraj(trenrdto,clan);
 		
 		trenerDao.save(clan);
-		utility.prekopiraj(clan,trenrdto);
+		MyUtil.prekopiraj(clan,trenrdto);
 
 		return trenrdto;
 		

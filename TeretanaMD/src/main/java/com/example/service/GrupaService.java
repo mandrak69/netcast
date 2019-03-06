@@ -81,10 +81,10 @@ public class GrupaService implements GrupaIF {
 			
 		//dohvati sva polja objekta i prepisi u Entity
 	    Grupa grupa = cl_temp.get();
-		utility.prekopiraj(grupadto,grupa);
+		MyUtil.prekopiraj(grupadto,grupa);
 		
 		grupaDao.save(grupa);
-		utility.prekopiraj(grupa,grupadto);
+		MyUtil.prekopiraj(grupa,grupadto);
 
 		return grupadto;
 		

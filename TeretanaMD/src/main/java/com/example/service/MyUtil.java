@@ -11,7 +11,7 @@ import java.util.List;
 
 
 
-public class utility {
+public class MyUtil {
 
 	public static <T> List<Field> getFields(T t) {
          List<Field> fields = new ArrayList<>();

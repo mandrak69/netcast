@@ -41,10 +41,12 @@ public class KnjigaTreninga   {
     @JsonBackReference
     private ClanPaket clanPaket;
     
+    
     @ManyToOne(optional = true)
     @JoinColumn
     @JsonBackReference
     private Operater operater;
+    
     
     public KnjigaTreninga() {
     }

@@ -86,10 +86,10 @@ public class ClanService implements ClanIF {
 			
 		//dohvati sva polja objekta i prepisi u Entity
 	    Clan clan = cl_temp.get();
-		utility.prekopiraj(clandto,clan);
+		MyUtil.prekopiraj(clandto,clan);
 		
 		clanDao.save(clan);
-		utility.prekopiraj(clan,clandto);
+		MyUtil.prekopiraj(clan,clandto);
 
 		return clandto;
 		

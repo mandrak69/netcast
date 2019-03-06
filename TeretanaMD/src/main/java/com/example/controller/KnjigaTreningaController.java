@@ -34,9 +34,11 @@ public class KnjigaTreningaController {
 		KnjigaTreninga n = new KnjigaTreninga();
 		n.setCena(cena);
 		Optional<ClanPaket> pak = clanPaketDao.findById(clanPaketId);
+		
 		pak.ifPresent((ph) -> n.setClanPaket(ph));
 		Optional<Trener> tre = trenerDao.findById(trenerId);
 		tre.ifPresent((ph) -> n.setTrener(ph));
+		
 
 		knjigaTreningaDao.save(n);
 
@@ -65,6 +67,7 @@ public class KnjigaTreningaController {
 		}
 		return 0;
 	}
+	
 //  prebroji broj treninga odradjenih od strane trenera po id
 	@PostMapping("/setujNivoTrenera")
 	public long setujNivoTrenera(@RequestParam Long id) {

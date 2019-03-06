@@ -33,12 +33,15 @@ public class JWTAuthenticationFilter implements javax.servlet.Filter {
 			chain.doFilter(request, response);
 			return;
 		}
+		if (httpRequest.getRequestURI().contains("/hello")) {
+			chain.doFilter(request, response);
+			return;
+		}
 
 		if (token != null && loginService.proveriToken(token)) {
 			String operaterEmail = loginService.getOperaterEmail(token);
 
 			if (operaterEmail != null) {
-				httpRequest.setAttribute("OPERATER_MAIL", operaterEmail);
 				chain.doFilter(request, response);
 				return;
 			} else

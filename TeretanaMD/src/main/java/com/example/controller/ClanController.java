@@ -61,6 +61,7 @@ public class ClanController {
 	@RequestMapping(path = "/all", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public @ApiResponseObject @ResponseBody Collection<Clan> getAllClan() {
+		
 		List<Clan> spisakClanova = clanService.findAll();
 
 		return spisakClanova;
@@ -85,27 +86,27 @@ public class ClanController {
 	}
 
 	
-	
-	@GetMapping(path = "/get/{id}")
-	public @ResponseBody Clan getClanbyId(
+	@ApiMethod
+	@RequestMapping(path = "/get/{id}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE })
+
+	public @ApiResponseObject @ResponseBody Clan getClanbyId(
 			@ApiPathParam(description = "The id of the member") @PathVariable(value = "id") Long id) {
+		
 		return clanService.findById(id);
 
 	}
+	
+	
 
 	@ApiMethod(
 
 			path="/countries/{id}", 
-
 			verb=ApiVerb.DELETE, 
-
 			description="Deletes the country with the given id",
-
 			produces={MediaType.APPLICATION_JSON_VALUE}
 
 		)
-
-	
 	
 		@ApiHeaders(headers={
 			@ApiHeader(name="application_id", description="The application id")
@@ -121,6 +122,11 @@ public class ClanController {
 		public @ResponseBody void delete(@ApiPathParam(name = "id", description = "Id number") Long id) {
 		clanService.delete(id);
 	}
+	
+	
+	
+	
+	
 
 	@PutMapping("/update/{id}")
 	public ClanDTO updateClan(@PathVariable Long id, @RequestBody ClanDTO clandto) {

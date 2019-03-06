@@ -22,7 +22,7 @@ import com.example.dto.ClanDTO;
 import com.example.dto.ClanPaketDTO;
 import com.example.dto.PaketDTO;
 import com.example.service.ClanPaketService;
-import com.example.service.utility;
+import com.example.service.MyUtil;
 //import org.jsondoc.core.annotation.ApiFlow;
 //import org.jsondoc.core.annotation.ApiFlowSet;
 //import org.jsondoc.core.annotation.ApiFlowStep;
@@ -102,7 +102,7 @@ public class ClanPaketController {
 	public @ResponseBody ClanPaketDTO getClanPaket(@RequestBody ClanPaketDTO clanPaketDto) {
 		// JSON clanovi
 		ClanPaket cln = clanPaketService.findById(clanPaketDto.getId());
-		utility.prekopiraj(cln, clanPaketDto);
+		MyUtil.prekopiraj(cln, clanPaketDto);
 		return clanPaketDto;
 	}
 

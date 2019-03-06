@@ -67,10 +67,10 @@ public class PaketService implements PaketIF{
 			
 			//dohvati sva polja objekta i prepisi u Entity
 		    Paket paket = imaga.get();
-			utility.prekopiraj(paketdto,paket);
+			MyUtil.prekopiraj(paketdto,paket);
 			
 			paketDAO.save(paket);
-			utility.prekopiraj(paket,paketdto);
+			MyUtil.prekopiraj(paket,paketdto);
 			return paketdto;
 			
 		}

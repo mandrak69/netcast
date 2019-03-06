@@ -54,7 +54,7 @@ public class KnjigaTreningaService {
 		{
 		//dohvati sva polja objekta i prepisi u Entity
 			KnjigaTreninga knj = clp.get();
-		utility.prekopiraj(knjigaTreningadto,knj);
+		MyUtil.prekopiraj(knjigaTreningadto,knj);
 		
 		knjigaTreningaDao.save(knj);
 

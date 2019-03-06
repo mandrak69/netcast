@@ -67,6 +67,9 @@ public class GrupaController {
 	}
 	
 	
+	
+	
+	
 	@ApiMethod(
 	        path = "/get/{id}",
 	        verb = ApiVerb.GET,
@@ -85,6 +88,7 @@ public class GrupaController {
     return grupaService.findById(id);
     
 	}
+	
 	
 	
 	@DeleteMapping("/delete/{id}")

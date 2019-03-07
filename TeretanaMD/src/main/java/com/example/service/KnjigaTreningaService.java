@@ -73,7 +73,12 @@ public class KnjigaTreningaService implements KnjigaTreningaIF {
 		return knjDTO;
 	}
 
+	
+	
 	// Zapis o terminu vezbanja dopunjen operaterom koji vrsi upis
+	
+	
+	
 	@Override
 	public KnjigaTreningaDTO addNewWithOperater(KnjigaTreningaDTO knjigaTreningadto, HttpServletRequest httpre) {
 		KnjigaTreninga target = new KnjigaTreninga();
@@ -84,10 +89,17 @@ public class KnjigaTreningaService implements KnjigaTreningaIF {
 		target.setOperater(em);
 
 		knjigaTreningaDao.save(target);
+		
+		
 		KnjigaTreningaDTO knjDTO = new KnjigaTreningaDTO();
+		
 		BeanUtils.copyProperties(target, knjDTO);
+		
 		return knjDTO;
 	}
+	
+	
+	
 
 	@Override
 	public KnjigaTreningaDTO update(KnjigaTreningaDTO knjigaTreningadto) {

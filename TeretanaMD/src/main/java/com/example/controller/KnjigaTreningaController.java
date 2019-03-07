@@ -1,5 +1,11 @@
 package com.example.controller;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,4 +107,18 @@ public class KnjigaTreningaController {
 		// JSON clanovi
 		return knjigaTreningaIF.findByClan(id);
 	}
+	
+	@GetMapping(path = "/between/{id}")
+	public @ResponseBody List<KnjigaTreningaClanaDTO> getTreningClanBetween(@Valid @RequestBody @PathVariable long id) throws ParseException {
+		// JSON clanovi
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		
+		Calendar startday = Calendar.getInstance();
+		startday.set(Calendar.DAY_OF_MONTH, 1);
+		Date enddate = new Date();
+		
+		return knjigaTreningaDao.findByVremeBetween(startday.getTime(),enddate);
+	}
+	
+	
 }

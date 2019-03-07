@@ -1,5 +1,6 @@
 package com.example.service.intf;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,4 +29,6 @@ public interface KnjigaTreningaIF {
 	public List<KnjigaTreningaClanaDTO> findByClan(long clan_id);
 	public List<KnjigaTreningaClanaDTO> findByClan(long id,long cl);
 	public Page<KnjigaTreningaDTO> findAll(Pageable pageable);
+
+	
 }

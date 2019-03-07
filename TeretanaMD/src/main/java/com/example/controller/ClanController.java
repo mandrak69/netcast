@@ -46,6 +46,7 @@ public class ClanController {
 	private ClanIF clanService;
 	@Autowired
 	private GrupaIF grupaService;
+	
 	public ClanController() {
 		super();
 	}

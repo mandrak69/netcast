@@ -96,22 +96,28 @@ public class ClanPaketService {
 
 	public String aktiviraj(Long id) {
 		// dohvati clanpaket.id aktiviraj paket , dohvati trajanje u minutama
+
 		ClanPaket clpak = clanPaketDao.findById(id).get();
-		// long sad = System.currentTimeMillis();
-		Date pp = new java.util.Date();
-		Instant instant = pp.toInstant();
+		if (clpak.getIstice() == null) {
+			// long sad = System.currentTimeMillis();
+			Date pp = new java.util.Date();
+			Instant instant = pp.toInstant();
 
-		// 1 sat =3600*1000milisec. ovde vreme u minutama cuvamo
-		// String output = instantHourLater.toString();
+			// 1 sat =3600*1000milisec. ovde vreme u minutama cuvamo
+			// String output = instantHourLater.toString();
 
-		Integer istice = clpak.getPaket().getTrajanje();
-		Duration duration = Duration.ofMinutes(istice);
-		Instant kasnije = instant.plus(duration);
-		Date enddat = Date.from(kasnije);
-		clpak.setIstice(enddat);
-		// mozda vratiti poruku aktivirano
-		clanPaketDao.save(clpak);
-		return "Aktiviran paket";
+			Integer istice = clpak.getPaket().getTrajanje();
+			Duration duration = Duration.ofMinutes(istice);
+			Instant kasnije = instant.plus(duration);
+			Date enddat = Date.from(kasnije);
+			clpak.setIstice(enddat);
+			// mozda vratiti poruku aktivirano
+			clanPaketDao.save(clpak);
+			return "Aktiviran paket";
+		} else {
+			return "Paket sa tim brojem je vec aktiviran.Zvacu policiju";
+
+		}
 
 	}
 

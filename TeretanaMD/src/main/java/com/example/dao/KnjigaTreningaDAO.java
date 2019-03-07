@@ -24,9 +24,11 @@ public interface KnjigaTreningaDAO extends JpaRepository<KnjigaTreninga, Long> {
 
 	List<KnjigaTreninga> findByClanPaket(ClanPaket clanPaket);
 	List<KnjigaTreninga> findByTrener(Trener trener);
-	List<KnjigaTreninga> findByVremeBetween(Date vreme, Date vremedo);
+	List<KnjigaTreningaClanaDTO> findByVremeBetween(Date vreme, Date vremedo);
 	List<KnjigaTreninga> findByOperater(Operater operater);
 	long countByTrener(Trener trener);
+	
+	
 	
 	@Query("SELECT u FROM KnjigaTreninga u WHERE u.trener = :trener and u.id = :id")
 	List<KnjigaTreningaClanaDTO> findKnjigaTreningaByTrenerAndIdNamedParams(

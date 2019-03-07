@@ -40,7 +40,7 @@ public class TeretanaMdApplication {
 		
 		
 		return (args) -> {
-			// save a couple of customers
+		/*	// save a couple of customers
 			Clan c1 = new Clan("Jack", "Bauer");
 			repository.save(c1);
 			Clan c2 = new Clan("Chloe", "O'Brian");
@@ -86,7 +86,7 @@ public class TeretanaMdApplication {
 			
 			
 			
-			
+			*/
 
 			// fetch all customers
 			log.info("Customers found with findAll():");

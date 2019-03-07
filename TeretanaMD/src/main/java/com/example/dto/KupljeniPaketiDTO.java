@@ -9,26 +9,16 @@ import com.example.domain.Paket;
 public class KupljeniPaketiDTO {
 
     private Long id; 
-    private String ime;  
-    private String prezime;
-    private String email;
-    private List<Paket> clanPaket;
+    private Long tickettId;
+    private String ticketName;  
+    private Double ticketPrice;
+    private Integer ticketExp;
     
     
     
 	public KupljeniPaketiDTO() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-
-
-	public KupljeniPaketiDTO(String ime, String prezime, String email, List<Paket> clanPaket) {
-		super();
-		this.ime = ime;
-		this.prezime = prezime;
-		this.email = email;
-		this.clanPaket = clanPaket;
 	}
 
 
@@ -45,52 +35,62 @@ public class KupljeniPaketiDTO {
 
 
 
-	public String getIme() {
-		return ime;
+	public Long getTickettId() {
+		return tickettId;
 	}
 
 
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setTickettId(Long tickettId) {
+		this.tickettId = tickettId;
 	}
 
 
 
-	public String getPrezime() {
-		return prezime;
+	public String getTicketName() {
+		return ticketName;
 	}
 
 
 
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setTicketName(String ticketName) {
+		this.ticketName = ticketName;
 	}
 
 
 
-	public String getEmail() {
-		return email;
+	public Double getTicketPrice() {
+		return ticketPrice;
 	}
 
 
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTicketPrice(Double ticketPrice) {
+		this.ticketPrice = ticketPrice;
 	}
 
 
 
-	public List<Paket> getPaket() {
-		return clanPaket;
+	public Integer getTicketExp() {
+		return ticketExp;
 	}
 
 
 
-	public void setPaket(List<Paket> clanPaket) {
-		this.clanPaket = clanPaket;
+	public void setTicketExp(Integer ticketExp) {
+		this.ticketExp = ticketExp;
 	}
-    
-    
+
+
+
+	@Override
+	public String toString() {
+		return "Ticket [id=" + id + ", tickettId=" + tickettId + ", ticketName=" + ticketName
+				+ ", ticketPrice=" + ticketPrice + ", ticketExp=" + ticketExp + "]";
+	}
+
+
+
+	
     
 }

@@ -74,12 +74,7 @@ public class OperaterController {
 	   return spisoperatera;
 	}
 	
-	@GetMapping("/operateri")
-	public Page<Operater> findAll(Pageable pageable){
-		return operaterService.findAll(pageable);
-	}
-	
-	
+
 	
 	@GetMapping(path="/get/{id}")
 	public @ResponseBody Operater getOperaterbyId(@PathVariable Long id)  {				

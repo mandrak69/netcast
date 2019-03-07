@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.jsondoc.core.annotation.Api;
 import org.jsondoc.core.annotation.ApiMethod;
@@ -28,7 +29,7 @@ import com.example.service.MyUtil;
 //import org.jsondoc.core.annotation.ApiFlowStep;
 
 @RestController
-@RequestMapping(path = "/clanpaket")
+@RequestMapping(path = "/membersTickets")
 @Api(description = "The Member's tickets controller", name = "Member's ticketing services")
 
 public class ClanPaketController {
@@ -42,29 +43,14 @@ public class ClanPaketController {
 	}
 	@ApiMethod
 
-	@GetMapping(path = "/all")
+	@GetMapping
 	public @ResponseBody Collection<ClanPaket> getAllClanPaket() {
 		Collection<ClanPaket> clanoviIpaketi = clanPaketService.findAllClanPaket();
 		// vraca JSON format clanove
 		return clanoviIpaketi;
 	}
 
-	
-	/*
-	 * @ApiFlow( name = "Book purchase flow", description =
-	 * "The flow for purchasing a book", preconditions = {
-	 * "To purchase a book there must be an existing user",
-	 * "The user must have an account with username and password",
-	 * "The user must have the role needed to purchase books" }, steps = {
-	 * 
-	 * @ApiFlowStep(apimethodid = FlowConstants.USER_LOGIN_METHOD_ID),
-	 * 
-	 * @ApiFlowStep(apimethodid = FlowConstants.BOOK_LIST_METHOD_ID),
-	 * 
-	 * @ApiFlowStep(apimethodid = FlowConstants.BOOK_OBJECT_METHOD_ID),
-	 * 
-	 * @ApiFlowStep(apimethodid = FlowConstants.BOOK_PURCHASE_METHOD_ID) })
-	 */
+
 	
 	@ApiMethod
 
@@ -75,13 +61,15 @@ public class ClanPaketController {
 
 		return "Saved";
 	}
-
+	/* kupuje paket i aktivira ga odmah. */
+	
 	@PostMapping(path = "/kupi")
 	public @ResponseBody String clanKupujePaket(@RequestBody ClanPaketDTO clanPaketDto) {
+		clanPaketDto.setDatum(new Date());
+		clanPaketDto.setIstice(new Date());
+		ClanPaket k = clanPaketService.save(clanPaketDto);
 
-		clanPaketService.save(clanPaketDto);
-
-		return "Kupljen";
+		return "Kupljen paket"+k.getId();
 	}
 
 	// aktivacija prebacuje kupon u Knjigu. Ideja ,mozda se ne uklopi u poslovni

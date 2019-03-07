@@ -4,6 +4,7 @@ import java.util.Date;
 
 
 import com.example.domain.ClanPaket;
+import com.example.domain.Operater;
 import com.example.domain.Trener;
 
 
@@ -16,13 +17,12 @@ public class KnjigaTreningaDTO  {
     private Date vreme;
     private Double cena;
     private Date vremedo;
-    
-   
+      
     private Trener trener;
-
-   
     private ClanPaket clanPaket;
-
+    private Operater operater;
+    
+    
     public KnjigaTreningaDTO() {
     }
 
@@ -31,6 +31,7 @@ public class KnjigaTreningaDTO  {
         this.cena = cena;
         this.trener = trener;
         this.clanPaket = clanPaket;
+        
     }
 
     public Long getId() {
@@ -101,6 +102,14 @@ public class KnjigaTreningaDTO  {
 
 	public void setVremedo(Date vremedo) {
 		this.vremedo = vremedo;
+	}
+
+	public Operater getOperater() {
+		return operater;
+	}
+
+	public void setOperater(Operater operater) {
+		this.operater = operater;
 	}
 
 }

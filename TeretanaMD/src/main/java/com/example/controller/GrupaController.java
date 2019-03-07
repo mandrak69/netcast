@@ -22,17 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.domain.Clan;
 import com.example.domain.Grupa;
 import com.example.dto.GrupaDTO;
 import com.example.service.intf.GrupaIF;
 
 import org.jsondoc.core.annotation.ApiError;
-
-
-//import org.jsondoc.core.annotation.ApiParam;
-
-
 
 @RestController    
 @RequestMapping(path="/grupa") 
@@ -42,9 +37,7 @@ public class GrupaController {
 	@Autowired
 	private GrupaIF grupaService;
 	
-	public GrupaController() {
-		super();	
-	}
+	
 	
 	@GetMapping(path="/all")
 	   public @ResponseBody Collection<Grupa> getAllGrupa() {
@@ -53,10 +46,7 @@ public class GrupaController {
 	   return spisakgrupa;
 	}
 	
-	@GetMapping("/clanovi")
-	public Page<Grupa> findAll(Pageable pageable){
-		return grupaService.findAll(pageable);
-	}
+	
 	
 	@PostMapping(path="/add") 
 	public @ResponseBody GrupaDTO addNewGrupa (@RequestBody GrupaDTO grupadto) {
@@ -65,8 +55,6 @@ public class GrupaController {
 		
 	return grupaAdd;
 	}
-	
-	
 	
 	
 	

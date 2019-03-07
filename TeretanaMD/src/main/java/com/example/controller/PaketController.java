@@ -83,15 +83,4 @@ public class PaketController {
 		return paket_temp;
 	}
 	
-	@GetMapping("/list")
-	public String paketList(Model model, Pageable pageable) {
-	        Page<Paket> pages = paketService.findAll(pageable) ;
-	        model.addAttribute("number", pages.getNumber());
-	        model.addAttribute("totalPages", pages.getTotalPages());
-	        model.addAttribute("totalElements",       
-	                                      pages.getTotalElements());
-	        model.addAttribute("size", pages.getSize());
-	        model.addAttribute("users", pages.getContent());
-	        return "/paket/list";
-	}
 }

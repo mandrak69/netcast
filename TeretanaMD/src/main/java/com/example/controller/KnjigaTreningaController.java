@@ -1,9 +1,15 @@
 package com.example.controller;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +21,9 @@ import com.example.dao.TrenerDAO;
 import com.example.domain.ClanPaket;
 import com.example.domain.KnjigaTreninga;
 import com.example.domain.Trener;
+import com.example.dto.KnjigaTreningaClanaDTO;
+import com.example.dto.KnjigaTreningaDTO;
+import com.example.service.intf.KnjigaTreningaIF;
 
 @RestController
 @RequestMapping(path = "/knjiga")
@@ -27,20 +36,24 @@ public class KnjigaTreningaController {
 	@Autowired
 	private TrenerDAO trenerDao;
 
+	@Autowired
+	KnjigaTreningaIF knjigaTreningaIF;
+	
+	
 	@PostMapping(path = "/add")
-	public @ResponseBody String addNewKnjigaTreninga(@RequestParam Long trenerId, @RequestParam Long clanPaketId,
+	public @ResponseBody String addNewKnjigaTreninga(@Valid @RequestBody @PathVariable long trenerId, @RequestParam long clanPaketId,
 			@RequestParam Double cena) {
 
-		KnjigaTreninga n = new KnjigaTreninga();
-		n.setCena(cena);
+		KnjigaTreninga novi_trening = new KnjigaTreninga();
+		novi_trening.setCena(cena);
 		Optional<ClanPaket> pak = clanPaketDao.findById(clanPaketId);
 		
-		pak.ifPresent((ph) -> n.setClanPaket(ph));
+		pak.ifPresent((ph) -> novi_trening.setClanPaket(ph));
 		Optional<Trener> tre = trenerDao.findById(trenerId);
-		tre.ifPresent((ph) -> n.setTrener(ph));
+		tre.ifPresent((ph) -> novi_trening.setTrener(ph));
 		
 
-		knjigaTreningaDao.save(n);
+		knjigaTreningaDao.save(novi_trening);
 
 		return "Saved";
 	}
@@ -52,7 +65,7 @@ public class KnjigaTreningaController {
 	}
 
 	@GetMapping(path = "/getId/{id}")
-	public @ResponseBody Optional<KnjigaTreninga> getKnjigaTreningabyId(@RequestParam Long id) {
+	public @ResponseBody Optional<KnjigaTreninga> getKnjigaTreningabyId(@Valid @RequestBody @PathVariable long id) {
 		// JSON clanovi
 		return knjigaTreningaDao.findById(id);
 	}
@@ -83,5 +96,9 @@ public class KnjigaTreningaController {
 		return 0;
 	}
 	
-
+	@GetMapping(path = "/getbyClanId/{id}")
+	public @ResponseBody List<KnjigaTreningaClanaDTO> getTreningForClanId(@Valid @RequestBody @PathVariable long id) {
+		// JSON clanovi
+		return knjigaTreningaIF.findByClan(id);
+	}
 }

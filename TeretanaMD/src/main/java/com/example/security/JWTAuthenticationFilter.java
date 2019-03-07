@@ -40,7 +40,7 @@ public class JWTAuthenticationFilter implements javax.servlet.Filter {
 
 		if (token != null && loginService.proveriToken(token)) {
 			String operaterEmail = loginService.getOperaterEmail(token);
-
+			request.setAttribute("operater_Email", operaterEmail);
 			if (operaterEmail != null) {
 				chain.doFilter(request, response);
 				return;

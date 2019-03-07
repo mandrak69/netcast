@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.domain.Clan;
+import com.example.domain.Grupa;
 import com.example.dto.ClanovaDTO;
 
 @Repository
@@ -22,7 +23,7 @@ public interface ClanDAO extends JpaRepository<Clan, Long> {
 	@Query(getAllClansByName)
 	List<Clan> getAllClansByName(Pageable pageable);
 
-	
+	Iterable<Clan> findByGrupa(Grupa grupa);
 
 	@Query("select new map(count(v) as cnt, clan.ime) from Clan clan group by clan.ime")
 	public List<ClanovaDTO> findClanCount();

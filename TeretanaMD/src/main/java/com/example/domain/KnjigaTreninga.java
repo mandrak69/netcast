@@ -42,7 +42,7 @@ public class KnjigaTreninga   {
     private ClanPaket clanPaket;
     
     
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = false)
     @JoinColumn
     @JsonBackReference
     private Operater operater;

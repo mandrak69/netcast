@@ -10,12 +10,16 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.dao.ClanPaketDAO;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.dao.ClanDAO;
+import com.example.dao.ClanPaketDAO;
+import com.example.dao.PaketDAO;
 import com.example.domain.Clan;
 import com.example.domain.ClanPaket;
 import com.example.domain.Paket;
 import com.example.dto.ClanDTO;
+import com.example.dto.ClanKupioPaketDTO;
 import com.example.dto.ClanPaketDTO;
 import com.example.dto.PaketDTO;
 
@@ -30,10 +34,14 @@ public class ClanPaketService {
 	ClanService clanService;
 	@Autowired
 	PaketService paketService;
+	@Autowired
+	ClanDAO clanDao;
+	@Autowired
+	PaketDAO paketDao;
 
 	public ClanPaketService() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public ClanPaket save(ClanPaketDTO clanPaketDto) {
@@ -93,7 +101,7 @@ public class ClanPaketService {
 
 		return;
 	}
-
+@Transactional
 	public String aktiviraj(Long id) {
 		// dohvati clanpaket.id aktiviraj paket , dohvati trajanje u minutama
 
@@ -112,7 +120,7 @@ public class ClanPaketService {
 			Date enddat = Date.from(kasnije);
 			clpak.setIstice(enddat);
 			// mozda vratiti poruku aktivirano
-			clanPaketDao.save(clpak);
+			clanPaketDao.saveAndFlush(clpak);
 			return "Aktiviran paket";
 		} else {
 			return "Paket sa tim brojem je vec aktiviran.Zvacu policiju";
@@ -128,6 +136,25 @@ public class ClanPaketService {
 			spisak.add(cc);
 		}
 		return spisak;
+	}
+
+	public String kupljenPaket(ClanKupioPaketDTO clanKupioPaketDTO) {
+		Optional<Clan> cl = clanDao.findById(clanKupioPaketDTO.getClanId());
+
+		if (cl.isPresent()) {
+			Optional<Paket> pk = paketDao.findById(clanKupioPaketDTO.getPaketId());
+			if (pk.isPresent()) {
+				ClanPaket noviCP = new ClanPaket();
+				noviCP.setClan(cl.get());
+				noviCP.setPaket(pk.get());
+				noviCP.setDatum(new Date());
+				
+				clanPaketDao.save(noviCP);
+				return "Zabelezena kupovina" + noviCP.getId();
+			}
+			return "Nepostojeci paket";
+		}
+		return "nepostojeci clan";
 	}
 
 }

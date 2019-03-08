@@ -18,12 +18,12 @@ public class JWTAuthenticationFilter implements javax.servlet.Filter {
 	LoginService loginService;
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(final ServletRequest request,final ServletResponse response,final FilterChain chain)
 			throws IOException, ServletException {
 		
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		String token = httpRequest.getHeader("token");
+		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+		final HttpServletResponse httpResponse = (HttpServletResponse) response;
+		final String token = httpRequest.getHeader("token");
 
 		if (httpRequest.getRequestURI().contains("operater/login")) {
 			chain.doFilter(request, response);

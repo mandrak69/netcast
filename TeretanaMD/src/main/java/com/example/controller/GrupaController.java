@@ -30,7 +30,7 @@ import com.example.service.intf.GrupaIF;
 import org.jsondoc.core.annotation.ApiError;
 
 @RestController    
-@RequestMapping(path="/grupa") 
+@RequestMapping(path="/group") 
 public class GrupaController {
 	
 	

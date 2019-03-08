@@ -22,7 +22,7 @@ import com.example.dto.PaketDTO;
 import com.example.service.intf.PaketIF;
 
 @RestController    
-@RequestMapping(path="/paket") 
+@RequestMapping(path="/ticket") 
 
 public class PaketController {
 	
@@ -68,7 +68,7 @@ public class PaketController {
 		paketDao.deleteById(id);		
 	}
 	
-	@DeleteMapping("/deletePaket")
+	@DeleteMapping("/deleteTicket")
 	public void deletePaket(@RequestBody PaketDTO paketdto) {
 	
 		paketService.delete(paketdto.getId());		

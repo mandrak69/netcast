@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.domain.ClanPaket;
 
 import com.example.dto.ClanDTO;
+import com.example.dto.ClanKupioPaketDTO;
 import com.example.dto.ClanPaketDTO;
 import com.example.dto.PaketDTO;
 import com.example.service.ClanPaketService;
@@ -29,7 +30,7 @@ import com.example.service.MyUtil;
 //import org.jsondoc.core.annotation.ApiFlowStep;
 
 @RestController
-@RequestMapping(path = "/membersTickets")
+@RequestMapping(path = "/tickets")
 @Api(description = "The Member's tickets controller", name = "Member's ticketing services")
 
 public class ClanPaketController {
@@ -41,8 +42,8 @@ public class ClanPaketController {
 		super();
 
 	}
-	@ApiMethod
 
+	@ApiMethod
 	@GetMapping
 	public @ResponseBody Collection<ClanPaket> getAllClanPaket() {
 		Collection<ClanPaket> clanoviIpaketi = clanPaketService.findAllClanPaket();
@@ -50,43 +51,42 @@ public class ClanPaketController {
 		return clanoviIpaketi;
 	}
 
-
-	
 	@ApiMethod
+	@GetMapping(path = "/all")
+	public @ResponseBody Collection<ClanPaket> getAllSoldTickets() {
+		Collection<ClanPaket> clanoviIpaketi = clanPaketService.findAllClanPaket();
+		// vraca JSON format clanove
+		return clanoviIpaketi;
+	}
 
+	@ApiMethod
 	@PostMapping(path = "/add")
-	public @ResponseBody String addNewClanPaket(@RequestBody ClanDTO clanDto, @RequestBody PaketDTO paketDto) {
+	public @ResponseBody String addNewClanPaket(@RequestBody ClanKupioPaketDTO clanKupioPaketDTO) {
 
-		clanPaketService.save(clanDto, paketDto);
+		clanPaketService.kupljenPaket(clanKupioPaketDTO);
 
 		return "Saved";
 	}
 	/* kupuje paket i aktivira ga odmah. */
-	
-	@PostMapping(path = "/kupi")
-	public @ResponseBody String clanKupujePaket(@RequestBody ClanPaketDTO clanPaketDto) {
-		clanPaketDto.setDatum(new Date());
-		clanPaketDto.setIstice(new Date());
-		ClanPaket k = clanPaketService.save(clanPaketDto);
 
-		return "Kupljen paket"+k.getId();
-	}
+	
 
 	// aktivacija prebacuje kupon u Knjigu. Ideja ,mozda se ne uklopi u poslovni
 	// model
-	@GetMapping(path = "/aktiviraj/{id}")
+	
+	@GetMapping(path = "/acivate/{id}")
 	public void aktivirajPaket(@PathVariable Long id) {
 		clanPaketService.aktiviraj(id);
 		return;
 	}
 
-	@GetMapping(path = "/getId/{id}")
+	@GetMapping(path = "/getById/{id}")
 	public @ResponseBody ClanPaket getClanPaketbyId(@PathVariable Long id) {
 		return clanPaketService.findById(id);
 
 	}
 
-	@PostMapping(path = "/getClanPaket")
+	@PostMapping(path = "/get")
 	public @ResponseBody ClanPaketDTO getClanPaket(@RequestBody ClanPaketDTO clanPaketDto) {
 		// JSON clanovi
 		ClanPaket cln = clanPaketService.findById(clanPaketDto.getId());

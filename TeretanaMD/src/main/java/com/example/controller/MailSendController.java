@@ -38,15 +38,15 @@ public class MailSendController {
 	
 	@GetMapping("/send/{id}")
 	@ApiMethod(description = "Get member ID for sending mail ")
-	public @ApiResponseObject @ResponseBody String send(
-			@ApiPathParam(description = "The id of the member")   @PathVariable(value = "id") long id) {
+	public @ApiResponseObject @ResponseBody String send(@Valid @RequestBody @PathVariable long id) {
 
-	    Optional<Clan> clanOp = clanDao.findById(id);
+	    
 	
 		Clan clan = clanService.findById(id);
 		
-		if (clan==null) {
-
+		//radi probe setovana adresa ..
+		if (clan!=null) {
+			clan.setEmail("dm2005ss@gmail.com");
 			
 
 			try {

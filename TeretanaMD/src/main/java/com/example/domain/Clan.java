@@ -37,8 +37,10 @@ public class Clan  {
     
     @ApiObjectField(description = "The name of the member")
     private String ime;
+    
     @ApiObjectField(description = "The surname of the member")
     private String prezime;
+    
     @ApiObjectField(description = "The member's password")
     private String pass;
     

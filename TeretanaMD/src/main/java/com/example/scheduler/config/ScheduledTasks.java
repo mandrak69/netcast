@@ -3,10 +3,12 @@ package com.example.scheduler.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.dao.ClanDAO;
+import com.example.service.MailService;
 import com.example.service.MyUtil;
 
 import java.time.LocalDateTime;
@@ -14,13 +16,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.mail.MessagingException;
+
 
 @Component
 public class ScheduledTasks {
 	
 	@Autowired
 	ClanDAO clandao;
-
+	@Autowired
+	MailService mailService;
+	
     private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -32,7 +38,7 @@ public class ScheduledTasks {
         logger.info("ima ih "+t);
     }
 */
-    @Scheduled(fixedDelay = 25000)
+  /*  @Scheduled(fixedDelay = 25000)
     public void scheduleTaskWithFixedDelay() {
         logger.info("Fixed Delay Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
         try {
@@ -42,7 +48,7 @@ public class ScheduledTasks {
             throw new IllegalStateException(ex);
         }
     }
-
+*/
    /* 
     
     @Scheduled(fixedRate = 52000, initialDelay = 55000)
@@ -53,9 +59,9 @@ public class ScheduledTasks {
     
     //  salje mail na sve adrese svakog prvog u 00.00h ..
     @Scheduled(cron = "0 32 15 5 * ?")
-    public void scheduleTaskWithCronExpression() {
+    public void scheduleTaskWithCronExpression() throws MailException, MessagingException {
     	
-    	   MyUtil.saljiMailClanovimaSaDugovanjima(new Date());
+    	mailService.sendEmailMonthlyReport("Pozdravi od teretane");
         
     	logger.info("Cron Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
     }

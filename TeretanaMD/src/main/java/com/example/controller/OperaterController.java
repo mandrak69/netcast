@@ -43,7 +43,7 @@ public class OperaterController {
 		
 	public OperaterController() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 

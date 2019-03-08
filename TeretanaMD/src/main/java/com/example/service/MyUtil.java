@@ -9,10 +9,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.dao.ClanDAO;
+
 
 
 public class MyUtil {
 
+	
 	public static <T> List<Field> getFields(T t) {
          List<Field> fields = new ArrayList<>();
          Class<?> clazz = t.getClass();
@@ -63,10 +68,6 @@ public class MyUtil {
 
 		}
 	
-	public static void saljiMailClanovimaSaDugovanjima(Date date) {
-		
-		
-	}
 	
 	
 }

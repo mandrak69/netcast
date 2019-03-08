@@ -47,7 +47,7 @@ public class ClanPaketController {
 	@GetMapping
 	public @ResponseBody Collection<ClanPaket> getAllClanPaket() {
 		Collection<ClanPaket> clanoviIpaketi = clanPaketService.findAllClanPaket();
-		// vraca JSON format clanove
+		
 		return clanoviIpaketi;
 	}
 
@@ -55,7 +55,7 @@ public class ClanPaketController {
 	@GetMapping(path = "/all")
 	public @ResponseBody Collection<ClanPaket> getAllSoldTickets() {
 		Collection<ClanPaket> clanoviIpaketi = clanPaketService.findAllClanPaket();
-		// vraca JSON format clanove
+		
 		return clanoviIpaketi;
 	}
 
@@ -67,13 +67,8 @@ public class ClanPaketController {
 
 		return "Saved";
 	}
-	/* kupuje paket i aktivira ga odmah. */
 
-	
 
-	// aktivacija prebacuje kupon u Knjigu. Ideja ,mozda se ne uklopi u poslovni
-	// model
-	
 	@GetMapping(path = "/acivate/{id}")
 	public void aktivirajPaket(@PathVariable Long id) {
 		clanPaketService.aktiviraj(id);
@@ -88,7 +83,7 @@ public class ClanPaketController {
 
 	@PostMapping(path = "/get")
 	public @ResponseBody ClanPaketDTO getClanPaket(@RequestBody ClanPaketDTO clanPaketDto) {
-		// JSON clanovi
+		
 		ClanPaket cln = clanPaketService.findById(clanPaketDto.getId());
 		MyUtil.prekopiraj(cln, clanPaketDto);
 		return clanPaketDto;

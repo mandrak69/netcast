@@ -13,6 +13,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
 import com.mongodb.ServerAddress;
+
+import model.City;
 public class CityClassToMongo {
 
   
@@ -33,7 +35,7 @@ static String[] upisiZapisOGradu(CityReport jsonzapis) {
            DB dbObj = mongoClntObj.getDB("mongodbdemo");
 
            // Get MongoDb Collection. If The Collection Doesn't Exists, MongoDb Will Automatically Create It For You
-           DBCollection kolekcija = dbObj.getCollection("zapisi2");
+           DBCollection kolekcija = dbObj.getCollection("CityReport");
 
            /**** INSERT OPERATION ****/
            // Creating The MongoDb Documents To Store Key-Value Pair

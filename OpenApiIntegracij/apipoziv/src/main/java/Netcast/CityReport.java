@@ -2,6 +2,8 @@ package Netcast;
 
 import java.util.ArrayList;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
@@ -14,32 +16,33 @@ import model.Sys;
 import model.Weather;
 import model.Wind;
 
+@Document
 public class CityReport {
-	@JsonProperty("coord")
+	
 	public Coord CoordObject;
-	@JsonProperty("weather")
+	
 	public ArrayList<Weather> weathers = new ArrayList<>();
-	@JsonProperty("base")
+	
 	private String base;
-	@JsonProperty("MainObject")
+	
 	Main MainObject;
-	@JsonProperty("visibility")
+	
 	private float visibility;
-	@JsonProperty("WindObject")
+	
 	Wind WindObject;
-	@JsonProperty("RainObject")
+	
 	Rain RainObject;
-	@JsonProperty("CloudsObject")
+	
 	Clouds CloudsObject;
-	@JsonProperty("dt")
+
 	private float dt;
-	@JsonProperty("SysObject")
+	
 	Sys SysObject;
-	@JsonProperty("id")
+	
 	private float id;
-	@JsonProperty("name")
+	
 	private String name;
-	@JsonProperty("cod")
+	
 	private float cod;
 
 	

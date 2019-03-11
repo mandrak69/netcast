@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,22 +8,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 
-import model.Clouds;
-import model.Coord;
-import model.Main;
-import model.Rain;
-import model.Sys;
-import model.Weather;
-import model.Wind;
 
 @Document
 public class City  {
-	private long id;
-	
+	private String id;
+	@JsonProperty("id")
+	private long cityId;
+	@JsonProperty("name")
 	private String name;
-	
+	@JsonProperty("coord")
 	public Coord coord;	
-	
+	@JsonProperty("cod")
 	private float cod;
 
 	
@@ -31,7 +26,6 @@ public class City  {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
 
 	public Coord getCoord() {
@@ -39,19 +33,29 @@ public class City  {
 	}
 
 
-
 	public void setCoord(Coord coord) {
 		this.coord = coord;
 	}
 
-
-	public float getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
+
+	public long getCityId() {
+		return cityId;
+	}
+
+
+	public void setCityId(long cityId) {
+		this.cityId = cityId;
+	}
+
 
 	public String getName() {
 		return name;

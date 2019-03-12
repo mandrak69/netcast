@@ -21,6 +21,7 @@ public class OwmJapisExample2 {
          DailyWeatherForecast dwf = owm.dailyWeatherForecastByCityId(792680);
         CurrentWeather cwd=owm.currentWeatherByCityId(792680) ;
         
+        System  sis=new System();
         
     	
         // checking data retrieval was successful or not

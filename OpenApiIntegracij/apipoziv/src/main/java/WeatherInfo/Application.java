@@ -49,8 +49,8 @@ public class Application {
 		
 		return args -> {
 			String response = restTemplate.getForObject(
-					"https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=e4801cffdffb979080eece7098f46150", String.class);
-			
+					"https://api.openweathermap.org/data/2.5/weather?id=3388615&APPID=e4801cffdffb979080eece7098f46150", String.class);
+
 			Gson gson = new Gson();
 			JsonParser parser = new JsonParser();
 			JsonObject object = (JsonObject) parser.parse(response);
